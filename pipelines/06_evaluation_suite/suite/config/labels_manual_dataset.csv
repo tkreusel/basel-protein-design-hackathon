@@ -1,0 +1,20 @@
+entry,kcat_KM,class,note
+HG3,4100,,manually_created_dataset.csv; source: doi.org/10.1038/s41589-024-01712-3
+HG3.R1,19000,,manually_created_dataset.csv; source: doi.org/10.1038/s41589-024-01712-3
+HG3.R2,43000,,manually_created_dataset.csv; source: doi.org/10.1038/s41589-024-01712-3
+HG3.R3,120000,,manually_created_dataset.csv; source: doi.org/10.1038/s41589-024-01712-3
+HG3.R4,670000,,manually_created_dataset.csv; source: doi.org/10.1038/s41589-024-01712-3
+HG3.R5,1700000,,manually_created_dataset.csv; source: doi.org/10.1038/s41589-024-01712-3
+HG3.3,30303,,manually_created_dataset.csv; source: back calculated from fig. 5 in doi.org/10.1038/s41589-024-01712-3
+HG3.7,94696,,manually_created_dataset.csv; source: back calculated from fig. 5 in doi.org/10.1038/s41589-024-01712-3
+HG3.14,946969,,manually_created_dataset.csv; source: back calculated from fig. 5 in doi.org/10.1038/s41589-024-01712-3
+HG3.17,1500000,,manually_created_dataset.csv; source: doi.org/10.1038/s41589-024-01712-3
+HG3.17wR5,31000,,manually_created_dataset.csv; source: doi.org/10.1038/s41589-024-01712-3
+HG3.5w17,43000,,manually_created_dataset.csv; source: doi.org/10.1038/s41589-024-01712-3
+1A53-core,7000,,manually_created_dataset.csv; source: doi:10.1021/jacs.9b02731
+1A53-2,4,,manually_created_dataset.csv; source: doi:10.1021/jacs.9b02731
+1A53-2.5,12000,,manually_created_dataset.csv; source: doi:10.1021/jacs.9b02731
+1A53-2.9,40900,,manually_created_dataset.csv; source: doi:10.1021/jacs.9b02731
+KABLE1,460,,manually_created_dataset.csv; source: https://www.biorxiv.org/content/10.64898/2026.05.29.728685v3
+KABLE1.4,230000,,manually_created_dataset.csv; source: https://www.biorxiv.org/content/10.64898/2026.05.29.728685v3
+KABLE2.5,32000000,,manually_created_dataset.csv; source: https://www.biorxiv.org/content/10.64898/2026.05.29.728685v3

@@ -1,0 +1,59 @@
+# His-as-base motifs. Conditioning is held IDENTICAL to the best Asp recipe
+# (kemp_rfd4_tips_buried.yaml, job23): fixed tip atoms + sequence, absolute C_CRD,
+# unindexed, C_RAS BURIED on motif + ligand. Only the motif changes, so any
+# difference in yield is attributable to the base.
+#
+# Chemistry to keep in mind (see docs/HIS_ZN_MOTIFS.md): a neutral imidazole is a
+# weaker base than a buried carboxylate, only ND1 here accepts the proton, and
+# NE2 must carry an H that needs an H-bond acceptor partner (tautomer lock).
+
+# A) our validated HG3.17 geometry, Asp127 -> His (imidazole fitted on the
+#    carboxylate, RMSD 0.09 A, ND1->N3 2.57 A). Gln50 donor + Trp44 wall kept.
+kemp_his_hg317:
+  input: ./kemp_motif_his.cif
+  contig: "E1:150-250, A44, A50, A127, /0, L1305"
+  conditions:
+    C_SEQ:
+      true:
+        - select: "sel('A/*/[44, 50, 127]')"
+    C_CRD:
+      true:
+        - select: "sel('A/*/127/[CB,CG,ND1,CD2,CE1,NE2]')"
+        - select: "sel('A/*/50/[CD,OE1,NE2]')"
+        - select: "sel('A/*/44/[CD1,NE1,CE2]')"
+        - select: "sel('L')"
+    C_RAS:
+      BURIED:
+        - select: "sel('L')"
+    C_IDX:
+      false:
+        - select: "sel('A/*/44')"
+          group: wall
+        - select: "sel('A/*/50')"
+          group: donor
+        - select: "sel('A/*/127')"
+          group: base
+
+# B) the handoff's GDM_KE_1483-derived theozyme with Glu -> His (ND1 variant:
+#    ND1->N3 3.00 A) and the Ser oxyanion partner (OG->N1 3.08 A). No Gln/Trp.
+kemp_his_gdm:
+  input: ./kemp_theozyme_his_gdm.cif
+  contig: "E1:150-250, A1, A2, /0, B1"
+  conditions:
+    C_SEQ:
+      true:
+        - select: "sel('A/*/[1, 2]')"
+    C_CRD:
+      true:
+        - select: "sel('A/*/1/[CB,CG,ND1,CD2,CE1,NE2]')"
+        - select: "sel('A/*/2/[CB,OG]')"
+        - select: "sel('B')"
+    C_RAS:
+      BURIED:
+        - select: "sel('B')"
+    C_IDX:
+      false:
+        - select: "sel('A/*/1')"
+          group: base
+        - select: "sel('A/*/2')"
+          group: partner

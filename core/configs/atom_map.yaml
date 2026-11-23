@@ -1,0 +1,92 @@
+# 6NT <-> TS <-> substrate atom correspondence (plan 6.1)
+#
+# DERIVED FROM COORDINATES, not from atom names or a chemical argument.
+# Source: src/derive_atom_map.py over benchmark/pdb (11 ligand copies in
+# 7K4Q, 7K4X, 7K4Z, 8RD5, 6SS1, 6SS3). Measurements in docs/MILESTONE1.md.
+#
+# geometry.py MUST read roles from this file. Plan 6.1: hard-coding atom names
+# into geometry.py silently invalidates every geometric score downstream.
+
+ligand:
+  ccd_id: 6NT
+  name: 6-nitrobenzotriazole
+  formula: C6 H4 N4 O2          # cross-checked against the RCSB CCD entry
+  formal_charge: 0
+  role: transition-state analogue of 5-nitrobenzisoxazole
+
+# Connectivity from the RCSB CCD entry (ligands/6NT_ccd.cif), Kekulised.
+# Triazole:  N1=N2-N3(H3), closed through C3A and C7A
+# Benzo:     C3A-C4-C5-C6-C7-C7A
+# Nitro:     C5-NO1(=O11)(-O21)
+connectivity_source: ligands/6NT_ccd.cif
+
+# --- the three positions the metrics need -----------------------------------
+roles:
+
+  abstraction_centre:
+    # The acidic N-H nitrogen. The catalytic base removes this proton.
+    # Substrate/TS analogue: C3 of 5-nitrobenzisoxazole.
+    atom_6NT: N3
+    proton_6NT: H3
+    atom_substrate: C3
+    bonded_to: [C3A, N2, H3]
+    evidence: >-
+      Asp127 OD2 -> N3 is 2.23-2.77 A in all 11 copies, and N3 is the closest
+      triazole nitrogen to the carboxylate in every single copy (N2 is
+      3.2-3.8 A, N1 is 4.3-4.9 A). Unambiguous.
+
+  oxyanion_centre:
+    # The atom bearing developing negative charge in the transition state.
+    # Substrate/TS analogue: isoxazole O1, which becomes the phenolate oxygen.
+    # Occupies the same ring position as O1: bonded to C7A and N2.
+    atom_6NT: N1
+    atom_substrate: O1
+    bonded_to: [C7A, N2]
+    evidence: >-
+      Gln50 NE2 -> N1 is 2.96-3.10 A in every Gln50 structure (7K4X, 7K4Z,
+      8RD5) and N1 is the closest of all candidate acceptors every time. The
+      same tip is 7.6-8.7 A from the nitro group, so the nitro group is NOT
+      the oxyanion contact in this scaffold. In the no-donor variants the
+      distance opens up: Lys50 NZ -> N1 is 6.05-7.42 A, Ala50 has no tip.
+
+  nitro_group:
+    # Measured as the alternative oxyanion hypothesis (plan cell family 'b')
+    # and REFUTED for this scaffold -- see thresholds.yaml and MILESTONE1.md.
+    # Retained because it is the electron-withdrawing group that sets the
+    # leaving-group pKa, and is a real burial/packing feature.
+    nitrogen_6NT: NO1
+    oxygens_6NT: [O11, O21]
+    attached_ring_atom: C5
+
+  benzo_ring:
+    # For pi-stacking against the pocket wall (plan 5.2 'wall' axis).
+    atoms_6NT: [C3A, C4, C5, C6, C7, C7A]
+
+# --- catalytic residues in the HG3 reference scaffold -----------------------
+# Read from the deposited coordinates, not assumed. Used for the Milestone 1
+# benchmark only; designs carry their own catalytic_residues in the record.
+reference_scaffold:
+  base:
+    resid: 127
+    resname: ASP
+    tip_atoms: [OD1, OD2]
+    # OD2 is consistently the proximal oxygen (OD1 is ~2.1 A further).
+    proximal_atom: OD2
+    all_atoms: [CG, OD1, OD2]       # for the SASA metric (plan 6.4)
+  donor:
+    resid: 50
+    # Identity VARIES across the series -- this is the activity determinant.
+    observed: {7K4Q: LYS, 7K4X: GLN, 7K4Z: GLN, 8RD5: GLN, 6SS1: ALA, 6SS3: LYS}
+    tip_atoms_by_resname:
+      GLN: [NE2, OE1]       # NE2 is the donor; OE1 points away (4.2-4.4 A)
+      ASN: [ND2, OD1]
+      LYS: [NZ]
+      TYR: [OH]
+      SER: [OG]
+      THR: [OG1]
+      ALA: []               # ablated
+    donating_atom_by_resname: {GLN: NE2, ASN: ND2, LYS: NZ, TYR: OH, SER: OG, THR: OG1}
+  wall:
+    resid: 44
+    resname: TRP
+    ring_atoms: [CG, CD1, CD2, NE1, CE2, CE3, CZ2, CZ3, CH2]

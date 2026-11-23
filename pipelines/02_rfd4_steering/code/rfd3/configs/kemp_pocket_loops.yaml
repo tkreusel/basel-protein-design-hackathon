@@ -1,0 +1,43 @@
+# RFD3 Kemp motif scaffolding, FK-steered (pocket_loops). Null = same file with resampling.potential_mode=blind.
+rfd3:
+  ckpt_path: /home/hd/hd_hd/hd_la299/rfd3_latest.ckpt
+  prevalidate_inputs: true
+  dump_trajectories: false
+  diffusion_batch_size: 12
+  inference_sampler:
+    num_timesteps: 101
+
+example_key: loopy_150_260
+design_inputs: /home/hd/hd_hd/hd_la299/HACKATHON_ETH/rfd3/inputs/kemp_rfd3_150_260.json
+reference_pdb_path: ""
+out_dir: /home/hd/hd_hd/hd_la299/HACKATHON_ETH/rfd3/out/20261121_pocket_loops
+num_trajectories: 1
+compute_pairwise_tm: true
+
+backflip_ckpt_path: ""
+backflip_device: cuda
+classifier_guidance:
+  mode: none
+resampling:
+  use_fk_steering: true
+  resampling_frequency: 5
+  tau: 0.1
+  potential_mode: immediate
+  gamma_min: 1.0
+  twist_proposal: false
+lookahead:
+  enabled: true
+  schedule: linear
+  k_max: 5
+  k_min: 1
+  t_stop: 0.72
+  feedback: none
+  rollout_step_scale: 1.0
+  rollout_n_recycle: null
+  sync_with_resampling: true
+  stop_at_gamma_min: true
+plot_loss: false
+plot_reward: true
+reward_terms:
+  - {kind: kemp_volume_ratio_error, name: pocket, weight: 0.25, geometry_target: 0.0, t_start: 0.5, t_stop: 1.0}
+  - {kind: kemp_loop_shell, name: loops, weight: 0.5, t_start: 0.5, t_stop: 1.0}

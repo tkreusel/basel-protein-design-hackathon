@@ -1,0 +1,156 @@
+# All gate cut-offs, one place (plan 3, 4.3).
+#
+# CALIBRATED FROM MEASURED DISTRIBUTIONS, not guessed. Every geometric value
+# below comes from src/derive_atom_map.py over the 11 ligand copies in
+# benchmark/pdb. Observed ranges are recorded inline so a future edit can see
+# what it is overriding. Plan 4.3: "Do not guess cut-offs."
+#
+# The only two values taken from literature are RFdiffusion2's, marked [lit].
+
+calibration:
+  source: src/derive_atom_map.py
+  structures: [7K4Q, 7K4X, 7K4Z, 8RD5, 6SS1, 6SS3]
+  ligand_copies: 11
+  date: 2026-11-21
+
+# --- stage 1: backbone acceptance (plan 6.2) --------------------------------
+stage1_backbone:
+  motif_heavy_atom_rmsd_max: 1.5      # [lit] RFdiffusion2
+  min_protein_ligand_contact: 1.5     # [lit] no atom pair closer than this
+  length_min: 150
+  length_max: 255                     # keeps stage 6's 260 limit non-binding
+  parse_rate_min: 0.80                # >=80% of outputs must be usable
+
+# --- geometry gate (the Milestone 1 scoring core) ---------------------------
+# Distances in Angstrom, heavy-atom to heavy-atom.
+geometry:
+
+  base_to_abstraction:
+    # Asp OD2 -> 6NT N3. Observed: 2.23 2.23 2.25 2.49 2.51 2.51 2.52 2.54
+    #                              2.57 2.57 2.61 2.77  (mean 2.48, sd 0.16)
+    # NOTE: this metric does NOT track activity -- HG3 (the weakest variant,
+    # 146 M-1s-1) has the SHORTEST distance at 2.23 A. It is necessary but not
+    # discriminating, so the composite must not weight it heavily. See
+    # docs/MILESTONE1.md.
+    observed_range: [2.23, 2.77]
+    ideal: [2.4, 3.0]
+    pass_max: 3.4                     # generous: all natives pass comfortably
+    hard_fail_min: 2.0                # closer than this is a clash, not a bond
+
+  donor_to_oxyanion:
+    # Oxyanion donor tip -> 6NT N1. THE discriminating metric.
+    # Gln50 (active):    2.96 2.98 3.02 3.03 3.10   (mean 3.02)
+    # Lys50 (inactive):  6.05 6.15 7.37 7.42
+    # Ala50 (ablated):   no tip at all
+    # A cut-off anywhere in 3.5-5.5 separates the two classes perfectly; 3.5
+    # is chosen to sit just outside H-bonding range.
+    observed_active_range: [2.96, 3.10]
+    observed_inactive_range: [6.05, 7.42]
+    ideal: [2.8, 3.2]
+    pass_max: 3.5
+    # hard_fail_min was 2.4, a generic clash floor picked before any donor
+    # distribution existed. Now calibrated: no catalytically active crystal
+    # has this contact shorter than 2.96 A (2.96/2.98/3.02/3.03/3.10 across
+    # 7K4X, 7K4Z, 8RD5). An N-N H-bond below ~2.7 A is strained, not stronger.
+    #
+    # This matters: burial-conditioned run job21 produced one design at
+    # 2.41 A, which passed the old 2.4 floor by 0.01 A. Median there was 3.14
+    # with p25-p75 = 3.09-3.20, so it is a single outlier, not a systematic
+    # squeeze -- but it should be rejected, and 2.7 rejects it and nothing
+    # else in either run.
+    hard_fail_min: 2.7
+    absent_penalty_distance: 99.0      # sentinel when the cell has no donor
+
+  wall_stacking:
+    # Trp44 ring centroid -> 6NT benzo centroid.
+    # Observed: 3.83 4.79 4.84 4.96 4.98 5.01 5.02 5.05 5.23 5.32 5.54
+    observed_range: [3.83, 5.54]
+    ideal: [3.6, 5.2]
+    pass_max: 6.0
+
+  ligand_burial:
+    # Is the ligand in a POCKET, or pasted on the surface? Distance metrics
+    # alone cannot tell -- a 32-design RFD4 batch satisfied every catalytic
+    # distance with a mean ligand rel_sasa of 0.291 (i.e. ~29% of the ligand
+    # solvent-exposed) and only 4-5/20 had a real pocket.
+    #
+    # Reference, measured on 7K4Z / 4BS0 / 7K4X (src/check_burial.py):
+    #   rel_sasa   0.002  0.010  0.011      (mean 0.008)
+    #   enclosure  1.000  0.996  0.992      (mean 0.996)
+    #   n_contacts   68     65     66
+    #   n_shell     211    200    202
+    #
+    # Cut-offs are deliberately looser than the crystals: a de novo pocket
+    # need not be as snug as an evolved one, but it must be a pocket.
+    rel_sasa_observed_crystal: [0.002, 0.011]
+    rel_sasa_ideal: [0.0, 0.08]
+    rel_sasa_pass_max: 0.15
+    enclosure_observed_crystal: [0.992, 1.000]
+    enclosure_ideal: [0.95, 1.0]
+    enclosure_pass_min: 0.88
+    n_contacts_pass_min: 35
+    calibrated: true
+
+  base_relative_sasa:
+    # Relative SASA of the catalytic carboxylate (CG, OD1, OD2) vs a
+    # Gly-Asp-Gly reference (plan 6.4). Burial is a WINDOW, not a maximum.
+    # TODO: measure on the benchmark set before trusting these bounds.
+    ideal: [0.0, 0.25]
+    pass_max: 0.40
+    calibrated: false                  # <-- not yet measured; do not gate on it
+
+# --- stage 3: physics, tmol (plan 6.4) --------------------------------------
+stage3_tmol:
+  # Not yet calibrated -- tmol is not installed (see docs/TOOL_NOTES.md).
+  # ddE_ts_sub is the ranking metric: large and negative is good; near zero
+  # means we built a binder, not a catalyst.
+  ddE_ts_sub_max: 0.0                  # placeholder
+  product_release_min: -8.0            # penalise strong product binding
+  calibrated: false
+
+# --- stage 5a: refold survival -- does the SEQUENCE encode the site? -------
+# The first non-circular test in the pipeline. RFD4 built the geometry, so
+# scoring RFD4's own output on that geometry proves little. Boltz-2 sees only
+# the sequence and the ligand, so if the active site is still there after an
+# independent refold, the sequence genuinely specifies it.
+#
+# Thresholds are the SAME crystal-calibrated values used at stage 1
+# (geometry.* above), deliberately. "Does it hold up" means "does it still
+# look like a Kemp eliminase active site", and the crystals define that. This
+# is a strictly harder test than stage 1 and the pass rate should be expected
+# to drop.
+refold_survival:
+  # Which stage-1 geometry keys must still pass on the refolded structure.
+  require_geometry: [base_to_abstraction, donor_to_oxyanion, wall_stacking]
+  require_burial: true
+  # Boltz confidence is RECORDED but not gated on. Plan 6.6: absolute
+  # confidence is not calibrated on de novo folds, so rank on gaps rather
+  # than absolutes. A floor this low only catches total prediction failure.
+  plddt_floor: 0.50
+  plddt_gate: false
+  calibrated: true
+
+# --- stage 5: Boltz-2 (plan 6.6) --------------------------------------------
+stage5_boltz:
+  plddt_global_min: 0.70
+  ipsae_p2l_min: 0.50
+  ipsae_d0: 2.0                        # fixed d0, no PAE cutoff (plan 6.6)
+  seed_consistency_rmsd_max: 2.0
+  n_seeds: 4
+  # Rank on ablation GAPS, not absolutes -- absolute confidence is not
+  # calibrated on de novo folds.
+  rank_on_gap: true
+  calibrated: false
+
+# --- stage 6: compliance, HARD constraints from the brief (plan 6.7) --------
+# These are not tunable. They are eligibility rules.
+stage6_compliance:
+  length_max: 260
+  seq_identity_max: 0.70               # to any published enzyme
+  tm_score_max: 0.70                   # to any published structure
+  # A highly identical local stretch inside a longer design fails the spirit
+  # of the rule even when global identity passes -- flag it separately.
+  local_identity_flag: 0.90
+  local_identity_min_span: 50          # residues
+  # TM-score is asymmetric: compute both normalisations, report the higher.
+  tm_report: max_of_both_normalisations

@@ -1,0 +1,28 @@
+--- /mnt/work/projects/Maxi/pipeline/src/maxi_eval/plot_best.py	2026-11-22 08:52:47.798450504 +0000
++++ /mnt/work/projects/tobi_v1/maxi_eval/src/maxi_eval/plot_best.py	2026-11-22 06:56:47.397620430 +0000
+@@ -37,7 +37,6 @@
+     "rlx.cst.n_pass": ("theozyme constraints met after relax (of 10)", ""),
+     "pr.tsa_pk-sub.int_base": ("tmol: base-residue interaction, TSA − substrate (REU)", ""),
+     "tmol swap|int.lk_ball_iso|tsa-prod": ("tmol: ligand–pocket lk_ball_iso (isotropic solvation), TSA − product (REU)", ""),
+-    "tmol swap|int.total|tsa": ("tmol: TSA–pocket interaction energy (REU)", ""),
+     "tmol swap|int.fa_lk|tsa-sub": ("tmol: ligand–pocket fa_lk (LK solvation), TSA − substrate (REU)", ""),
+     "tmol swap|int.total|tsa-sub": ("tmol: ligand–pocket total interaction, TSA − substrate (REU)", ""),
+     "pr.tsa_pk.int_sum": ("tmol: summed per-residue ligand interaction, TSA complex (REU)", ""),
+@@ -76,8 +75,6 @@
+         t = f"ρ = {s['rho']:+.2f}   q = {s['q_BH']:.2f}\nLOPO {s['rho_loo_min']:+.2f}…{s['rho_loo_max']:+.2f}"
+         if np.isfinite(s.get("rho_within_family", np.nan)):
+             t += f"\nwithin-family ρ = {s['rho_within_family']:+.2f}"
+-        if s.get("extra"):
+-            t += "\n" + s["extra"]
+         ax.text(0.03 if s["rho"] < 0 else 0.97, 0.04, t, transform=ax.transAxes, fontsize=7, va="bottom", ha="left" if s["rho"] < 0 else "right",
+                 bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="#cccccc", alpha=0.9))
+     ax.set_title(ttl, fontsize=8.2, loc="left"); ax.set_xlabel("")
+@@ -127,7 +124,7 @@
+         ax.text(v + 0.01, yi, f"p = {p:.3f}", va="center", fontsize=8)
+     ax.set_yticks(y); ax.set_yticklabels([g.replace("set:", "") for g in N.group], fontsize=8); ax.set_xlim(0, 1)
+     ax.set_xlabel("best |Spearman ρ| in the feature set"); ax.set_title("Where is the signal? Best correlation per feature set vs selection-aware noise level (red: p < 0.05)", fontsize=10, loc="left")
+-    ax.legend(loc="upper right", bbox_to_anchor=(1.0, -0.13), fontsize=8, frameon=False); [ax.spines[k].set_visible(False) for k in ("top", "right")]; fig.tight_layout(); fig.savefig(out / "fig3_signal_by_feature_set.png", dpi=170); plt.close(fig)
++    ax.legend(loc="lower right", fontsize=8, frameon=False); [ax.spines[k].set_visible(False) for k in ("top", "right")]; fig.tight_layout(); fig.savefig(out / "fig3_signal_by_feature_set.png", dpi=170); plt.close(fig)
+     # fig4 HG3 only
+     MH = pd.read_csv(Path(a.screen_hg3) / "candidate_matrix.csv", index_col=0); SH = pd.read_csv(Path(a.screen_hg3) / "candidates_all.csv").set_index("candidate")
+     labh = lab[lab.family == "HG3"]

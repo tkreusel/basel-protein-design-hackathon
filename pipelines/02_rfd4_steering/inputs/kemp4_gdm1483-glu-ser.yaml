@@ -1,0 +1,30 @@
+# kemp4_gdm: tips-only motif, burial + hydrophobic-contact + nitro-O H-bond-acceptor conditioning (nitro H-bond is CONDITIONED, not rewarded)
+kemp4_gdm:
+  input: kemp2_theozyme.cif
+  contig: "A1, A2, EX1:118-258, /0, B1"
+  conditions:
+    C_CRD:
+      true:
+        - select: "sel('A/*/1/[CG,CD,OE1,OE2]')"
+        - select: "sel('A/*/2/[CA,CB,OG]')"
+        - select: "sel('B')"
+    C_SEQ:
+      true:
+        - select: "sel('A/*/[1,2]')"
+        - select: "sel('B')"
+    C_IDX:
+      false:
+        - {select: "sel('A/*/1')", group: glu}
+        - {select: "sel('A/*/2')", group: ser}
+    C_RAS:
+      BURIED:
+        - select: "sel('A/*/1/[CG,CD,OE1,OE2]')"
+        - select: "sel('A/*/2/[CB,OG]')"
+        - select: "sel('B')"
+    C_HPHOB:
+      true:
+        - select: "sel('A/*/1/[CG,CD]')"
+        - select: "sel('B/*/*/[C5,C6,C7,C4]')"
+    C_HB:
+      ACCEPTOR:
+        - select: "sel('B/*/*/[O21,O11]')"

@@ -1,0 +1,24 @@
+REMARK Kemp theozyme, Glu1 replaced by His1 (imidazole rigid-fit onto carboxylate)
+REMARK Fit: His CB,CG,ND1,CD2 onto Glu CG,CD,OE1,OE2; RMSD 0.09 A; ideal planar imidazole
+ATOM      1  CB  HIS A   1      -2.272 -17.157  35.764  1.00  0.00           C
+ATOM      2  CG  HIS A   1      -3.647 -16.592  35.966  1.00  0.00           C
+ATOM      3  ND1 HIS A   1      -3.941 -15.412  36.551  1.00  0.00           N
+ATOM      4  CD2 HIS A   1      -4.807 -17.173  35.594  1.00  0.00           C
+ATOM      5  CE1 HIS A   1      -5.282 -15.264  36.541  1.00  0.00           C
+ATOM      6  NE2 HIS A   1      -5.817 -16.353  35.950  1.00  0.00           N
+ATOM      7  CA  SER A   2       0.811 -23.422  31.237  1.00  0.00           C
+ATOM      8  CB  SER A   2      -0.460 -22.666  31.508  1.00  0.00           C
+ATOM      9  OG  SER A   2      -1.185 -23.278  32.555  1.00  0.00           O
+HETATM   10  O21 6NT B   1      -9.557 -19.804  34.150  1.00  0.00           O
+HETATM   11  NO1 6NT B   1      -9.103 -20.870  33.482  1.00  0.00           N
+HETATM   12  O11 6NT B   1      -9.936 -21.749  33.080  1.00  0.00           O
+HETATM   13  C5  6NT B   1      -7.698 -21.130  33.346  1.00  0.00           C
+HETATM   14  C6  6NT B   1      -7.314 -22.333  32.781  1.00  0.00           C
+HETATM   15  C7  6NT B   1      -6.006 -22.632  32.713  1.00  0.00           C
+HETATM   16  C7A 6NT B   1      -5.058 -21.736  33.321  1.00  0.00           C
+HETATM   17  N1  6NT B   1      -3.694 -21.696  33.378  1.00  0.00           N
+HETATM   18  C3A 6NT B   1      -5.509 -20.531  33.840  1.00  0.00           C
+HETATM   19  C4  6NT B   1      -6.864 -20.186  33.892  1.00  0.00           C
+HETATM   20  N3  6NT B   1      -4.376 -19.847  34.299  1.00  0.00           N
+HETATM   21  N2  6NT B   1      -3.314 -20.563  34.002  1.00  0.00           N
+END

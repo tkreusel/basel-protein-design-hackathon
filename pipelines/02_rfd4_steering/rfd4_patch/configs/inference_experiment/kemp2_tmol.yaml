@@ -1,0 +1,16 @@
+# @package _global_
+# Kemp theozyme GDM_KE_1483, burial-conditioned (kemp2_rfd4_buried.yaml). Steered arm "tmol": beam search, clean prediction at 20/35/50, final at 60.
+defaults:
+  - inference_on_user_inputs
+  - _self_
+inputs: ${oc.env:PROJECT_ROOT}/../rfd4_runs/inputs/kemp2_rfd4_buried.yaml
+out_dir: ${oc.env:PROJECT_ROOT}/../rfd4_runs/out/20261121_k2_tmol
+run_name_: k2_tmol
+search:
+  n_branch: 3
+  beam_width: 2
+  checkpoints:
+    "20": {use_clean_prediction: true, metrics: [kemp_pocket, tmol_lig_ddg], rewards: {tmol_lig_ddg.interface_ddg: {weight: -1.0, normalize_by: 20.0, clip: {min: -80.0, max: 20.0}}, kemp_pocket.volume_ratio_error: {weight: -0.5, clip: {max: 1.0}}}}
+    "35": {use_clean_prediction: true, metrics: [kemp_pocket, tmol_lig_ddg], rewards: {tmol_lig_ddg.interface_ddg: {weight: -1.0, normalize_by: 20.0, clip: {min: -80.0, max: 20.0}}, kemp_pocket.volume_ratio_error: {weight: -0.5, clip: {max: 1.0}}}}
+    "50": {use_clean_prediction: true, metrics: [kemp_pocket, tmol_lig_ddg], rewards: {tmol_lig_ddg.interface_ddg: {weight: -1.0, normalize_by: 20.0, clip: {min: -80.0, max: 20.0}}, kemp_pocket.volume_ratio_error: {weight: -0.5, clip: {max: 1.0}}}}
+    "60": {metrics: [kemp_pocket, tmol_lig_ddg], rewards: {tmol_lig_ddg.interface_ddg: {weight: -1.0, normalize_by: 20.0, clip: {min: -80.0, max: 20.0}}, kemp_pocket.volume_ratio_error: {weight: -0.5, clip: {max: 1.0}}}}

@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+# large or reproducible data is never committed; see docs/08_PROVENANCE_AND_DATA_LOCATIONS.md
+benchmark/
+runs/
+cache/
+logs/
+env/kemp-orch/
+*.xtc
+*.npz
+*.ckpt
+*.pem
+*.tar
+*.tar.gz
+slurm-*.out

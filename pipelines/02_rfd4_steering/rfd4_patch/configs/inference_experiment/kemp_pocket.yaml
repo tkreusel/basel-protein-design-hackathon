@@ -1,0 +1,17 @@
+# @package _global_
+# Kemp motif scaffolding, steered arm "pocket". Beam search over the 60-step schedule, scoring the clean prediction at 20/35/50
+# and the finished structure at 60. n_branch x beam_width children per segment.
+defaults:
+  - inference_on_user_inputs
+  - _self_
+inputs: ${oc.env:PROJECT_ROOT}/../rfd4_runs/inputs/kemp_rfd4.yaml
+out_dir: ${oc.env:PROJECT_ROOT}/../rfd4_runs/out/20261121_pocket
+run_name_: pocket
+search:
+  n_branch: 3
+  beam_width: 2
+  checkpoints:
+    "20": {use_clean_prediction: true, metrics: [kemp_pocket], rewards: {kemp_pocket.volume_ratio_error: {weight: -1.0, clip: {max: 1.0}}}}
+    "35": {use_clean_prediction: true, metrics: [kemp_pocket], rewards: {kemp_pocket.volume_ratio_error: {weight: -1.0, clip: {max: 1.0}}}}
+    "50": {use_clean_prediction: true, metrics: [kemp_pocket], rewards: {kemp_pocket.volume_ratio_error: {weight: -1.0, clip: {max: 1.0}}}}
+    "60": {metrics: [kemp_pocket], rewards: {kemp_pocket.volume_ratio_error: {weight: -1.0, clip: {max: 1.0}}}}

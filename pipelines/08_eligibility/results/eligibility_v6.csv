@@ -1,0 +1,46 @@
+cand_id,verdict,length,pdb_glob_id,pdb_aln_id,pdb_cov,pdb_hit,pdb_stretch90,uniref_glob_id,uniref_aln_id,uniref_cov,uniref_hit,uniref_stretch90,tm_max,tm_hit,reasons
+kemp4_with_trp_126__mpnn3,PASS-with-warnings,215,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.433,8C6V_C,UniRef90 not checked
+hgnt__steer_base_tmol__no_trp_0_beam3_6__mpnn3,PASS-with-warnings,127,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.632,7BQR_A,TM 0.63 to 7BQR_A; UniRef90 not checked
+hgnt__steer_base_tmol__no_trp_0_beam3_5__mpnn4,PASS-with-warnings,127,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.63,7BQR_A,UniRef90 not checked
+kemp4_with_trp_107__mpnn1,PASS-with-warnings,168,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.6,9O5S_T,UniRef90 not checked
+hgnt__steer_base_tmol__no_trp_0_beam3_5__mpnn1,PASS-with-warnings,127,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.623,7BQR_A,UniRef90 not checked
+hgnt__steer_base_tmol__no_trp_0_beam3_6__mpnn1,PASS-with-warnings,127,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.623,7BQR_A,UniRef90 not checked
+p10_f0.5_0__mpnn2,PASS-with-warnings,135,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.519,9UC5_A,UniRef90 not checked
+full-e7665dd88a3f_s1,PASS-with-warnings,215,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.653,4LDA_G,TM 0.65 to 4LDA_G; UniRef90 not checked
+p05_f0.3_1__mpnn1,PASS-with-warnings,191,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.569,6R6M_A,UniRef90 not checked
+tip-939b62affe31_s2,PASS-with-warnings,176,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.669,9DEB_F,TM 0.67 to 9DEB_F; UniRef90 not checked
+kemp4_with_trp_230__mpnn4,PASS-with-warnings,191,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.572,6R6M_A,UniRef90 not checked
+kemp4_with_trp_128__mpnn1,PASS-with-warnings,161,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.536,8IMK_q,UniRef90 not checked
+hgnt__steer_base_tmol__no_trp_0_beam3_6__mpnn2,PASS-with-warnings,127,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.628,7BQR_A,UniRef90 not checked
+hgnt__steer_base_tmol__no_trp_0_beam3_6__mpnn4,PASS-with-warnings,127,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.632,7BQR_A,TM 0.63 to 7BQR_A; UniRef90 not checked
+hgwt__steer_tmol_ch18__b03_c0025_with_trp_24_beam3_5__shell1,PASS-with-warnings,219,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.687,23WU_D,TM 0.69 to 23WU_D; UniRef90 not checked
+full-939b62affe31,PASS-with-warnings,213,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.585,2N3Z_A,UniRef90 not checked
+full-939b62affe31_s3,PASS-with-warnings,213,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.585,3Q15_D,UniRef90 not checked
+full-95821471b8b4_s1,PASS-with-warnings,182,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.686,7M0Q_B,TM 0.69 to 7M0Q_B; UniRef90 not checked
+full-95821471b8b4_s3,FAIL,182,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.702,7M0Q_A,TM 0.70 to 7M0Q_A; UniRef90 not checked
+full-95821471b8b4_s4,FAIL,182,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.703,7M0Q_A,TM 0.70 to 7M0Q_A; UniRef90 not checked
+full-ce941bbd5c43,PASS-with-warnings,164,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.498,6M36_B,UniRef90 not checked
+full-deb0c8c78729_s3,PASS-with-warnings,203,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.693,9DEC_B,TM 0.69 to 9DEC_B; UniRef90 not checked
+full-e7665dd88a3f_s2,PASS-with-warnings,215,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.654,4LDA_E,TM 0.65 to 4LDA_E; UniRef90 not checked
+tip-122fac2661fe,PASS-with-warnings,176,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.618,9K7W_E,UniRef90 not checked
+tip-122fac2661fe_s4,PASS-with-warnings,176,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.585,9K7W_D,UniRef90 not checked
+tip-7860b336b578,PASS-with-warnings,209,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.65,1NLX_D,TM 0.65 to 1NLX_D; UniRef90 not checked
+tip-7860b336b578_s4,PASS-with-warnings,209,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.655,1NLX_I,TM 0.66 to 1NLX_I; UniRef90 not checked
+tip-7d87f68615db,PASS-with-warnings,232,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.568,6SWD_V,UniRef90 not checked
+tip-83942397cfda,PASS-with-warnings,220,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.657,9K7X_C,TM 0.66 to 9K7X_C; UniRef90 not checked
+tip-83942397cfda_s1,PASS-with-warnings,220,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.525,8GJG_A,UniRef90 not checked
+tip-939b62affe31_s3,PASS-with-warnings,176,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.681,9DEB_X,TM 0.68 to 9DEB_X; UniRef90 not checked
+tip-a07a8db342eb_s2,PASS-with-warnings,225,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.547,3FBZ_D,UniRef90 not checked
+tip-b8185dadc4d0,PASS-with-warnings,222,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.541,9M6Y_B,UniRef90 not checked
+tip-b8185dadc4d0_s1,PASS-with-warnings,222,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.545,9M6Y_B,UniRef90 not checked
+tip-b8185dadc4d0_s3,PASS-with-warnings,222,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.671,1UWX_B,TM 0.67 to 1UWX_B; UniRef90 not checked
+tip-b8185dadc4d0_s4,PASS-with-warnings,222,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.546,9M6Y_B,UniRef90 not checked
+tip-dce229237e09_s1,PASS-with-warnings,213,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.603,9K7W_B,UniRef90 not checked
+tip-dce229237e09_s2,PASS-with-warnings,213,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.558,7M5T_A,UniRef90 not checked
+tip-dce229237e09_s3,PASS-with-warnings,213,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.565,9VKE_D,UniRef90 not checked
+tip-dce229237e09_s4,PASS-with-warnings,213,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.584,27AG_D,UniRef90 not checked
+tip-e7665dd88a3f_s2,PASS-with-warnings,189,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.612,9SGJ_A,UniRef90 not checked
+tip-e94bf1186254_s4,PASS-with-warnings,235,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.633,9K7U_A,TM 0.63 to 9K7U_A; UniRef90 not checked
+tip-fce49e67e225_s1,PASS-with-warnings,167,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.521,5E6G_B,UniRef90 not checked
+hgnt__steer_base__no_trp_1_beam3_0__mpnn1,FAIL,180,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.704,2KPO_A,TM 0.70 to 2KPO_A; UniRef90 not checked
+hgnt__steer_base__no_trp_1_beam3_0__mpnn2,FAIL,180,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.707,2KPO_A,TM 0.71 to 2KPO_A; UniRef90 not checked

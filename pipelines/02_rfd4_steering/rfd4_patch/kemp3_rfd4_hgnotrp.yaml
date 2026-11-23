@@ -1,0 +1,26 @@
+# HG3.17 motif WITHOUT Trp44: Gln50 + Asp127 (all atoms of both residues in the file, backbone included) + 6NT, burial-conditioned.
+kemp3_hgnotrp:
+  input: kemp_motif.cif
+  contig: "A50, A127, EX1:148-258, /0, B1"
+  conditions:
+    C_CRD:
+      true:
+        - select: "sel('A/*/[50,127]')"
+        - select: "sel('B')"
+    C_SEQ:
+      true:
+        - select: "sel('A/*/[50,127]')"
+        - select: "sel('B')"
+    C_IDX:
+      false:
+        - {select: "sel('A/*/50')", group: q50}
+        - {select: "sel('A/*/127')", group: d127}
+    C_RAS:
+      BURIED:
+        - select: "sel('A/*/50/[CB,CG,CD,OE1,NE2]')"
+        - select: "sel('A/*/127/[CB,CG,OD1,OD2]')"
+        - select: "sel('B')"
+    C_HPHOB:
+      true:
+        - select: "sel('A/*/127/[CB,CG]')"
+        - select: "sel('B/*/*/[C5,C6,C7,C4]')"

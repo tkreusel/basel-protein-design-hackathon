@@ -1,0 +1,38 @@
+cand_id,verdict,length,pdb_glob_id,pdb_aln_id,pdb_cov,pdb_hit,pdb_stretch90,uniref_glob_id,uniref_aln_id,uniref_cov,uniref_hit,uniref_stretch90,tm_max,tm_hit,reasons
+hgnt__steer_tmol__b07_c0050_no_trp_3_beam3_0__mpnn2,PASS-with-warnings,173,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.64,2YGU_C,TM 0.64 to 2YGU_C
+hgnt__steer_tmol_ch18__b02_c0025_no_trp_13_beam3_6__shell1,PASS,131,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.597,9K7W_C,
+hgnt__steer_tmol__b07_c0025_no_trp_3_beam3_5__mpnn1,PASS,185,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.438,8FED_I,
+kemp4_with_trp_128__rfd4,PASS,161,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.533,8IMK_p,
+hgnt__steer_tmol_ch18__b04_c0025_no_trp_23_beam3_6__shell1,PASS,165,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.524,3N2O_C,
+hgnt__steer_base_tmol__no_trp_0_beam3_5__mpnn3,PASS,127,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.629,13FC_A,
+hgnt__steer_tmol__b07_c0050_no_trp_3_beam3_0__mpnn4,PASS-with-warnings,173,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.64,2YGU_C,TM 0.64 to 2YGU_C
+hgnt__steer_tmol__b07_c0050_no_trp_3_beam3_9__mpnn2,PASS-with-warnings,173,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.639,2YGU_A,TM 0.64 to 2YGU_A
+hgnt__steer_tmol_ch18__b04_c0025_no_trp_23_beam3_6__rfd4,PASS,165,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.565,1W09_A,
+hgnt__unsteered__b01_c0150_no_trp_19__mpnn1,PASS,171,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.515,2KCL_A,
+full-af14b3c83c24_s4,PASS,197,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.627,3HV2_B,
+hgnt__steer_tmol_ch18__b04_c0025_no_trp_23_beam3_11__shell1,PASS,165,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.469,7YH8_A,
+hgnt__steer_tmol__b07_c0025_no_trp_3_beam3_4__mpnn3,PASS,185,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.444,8WTM_B,
+hgnt__steer_tmol__b05_c0025_no_trp_1_beam3_1__mpnn3,FAIL,118,0.0,,,no hit with e<1e-3,0,0.964,0.964,1.0,UniRef90_UPI00142602C6,312,0.675,9DEC_C,uniref identity 0.96; uniref aligned identity 0.96 over cov 1.0; uniref >=90% stretch of 312 aa; TM 0.68 to 9DEC_C
+kemp4_with_trp_126__mpnn2,PASS,215,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.436,7MWR_B,
+hgnt__steer_base_tmol__no_trp_0_beam3_5__rfd4,PASS-with-warnings,127,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.632,7BQR_A,TM 0.63 to 7BQR_A
+hgnt__steer_base_tmol__no_trp_0_beam3_6__rfd4,PASS-with-warnings,127,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.633,7BQR_A,TM 0.63 to 7BQR_A
+hgnt__steer_tmol_ch18__b04_c0075_no_trp_12_beam3_6__mpnn3,PASS,242,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.553,8K84_A,
+hgnt__steer_tmol__b07_c0050_no_trp_3_beam3_9__mpnn1,PASS-with-warnings,173,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.644,2YGU_D,TM 0.64 to 2YGU_D
+hgnt__steer_tmol_ch18__b02_c0075_no_trp_9_beam3_10__shell1,FAIL,150,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.708,9K7X_B,TM 0.71 to 9K7X_B
+hgnt__steer_tmol_ch18__b02_c0075_no_trp_9_beam3_9__shell1,FAIL,150,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.707,9K7X_B,TM 0.71 to 9K7X_B
+kemp4_with_trp_230__mpnn1,PASS-with-warnings,191,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.656,9K5P_C,TM 0.66 to 9K5P_C
+hgnt__steer_tmol__b05_c0025_no_trp_1_beam3_1__mpnn1,PASS,118,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.592,8RJC_7,
+hgnt__steer_tmol_ch18__b04_c0075_no_trp_12_beam3_6__shell1,PASS,242,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.553,8K84_B,
+hgnt__steer_tmol_ch18__b04_c0075_no_trp_12_beam3_5__mpnn4,PASS,242,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.556,8K84_A,
+hgnt__steer_tmol__b02_c0000_no_trp_5_beam3_2__mpnn1,PASS,252,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.5,7UZQ_K,
+hgnt__steer_tmol_ch18__b04_c0075_no_trp_12_beam3_4__mpnn4,PASS,242,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.558,8K84_A,
+hgnt__steer_tmol_ch18__b04_c0075_no_trp_12_beam3_4__mpnn2,PASS,242,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.546,2BNL_C,
+hgnt__steer_tmol__b02_c0000_no_trp_5_beam3_0__shell1,PASS,252,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.491,2JPS_A,
+hgwt__steer_tmol_ch18__b03_c0025_with_trp_24_beam3_5__mpnn2,PASS-with-warnings,219,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.688,23WU_D,TM 0.69 to 23WU_D
+hgnt__steer_tmol__b02_c0000_no_trp_5_beam3_2__mpnn3,PASS,252,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.534,6QQ4_B,
+hgnt__steer_tmol__b02_c0000_no_trp_5_beam3_0__mpnn3,PASS,252,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.495,2JPS_A,
+hgwt__steer_tmol_ch18__b03_c0025_with_trp_24_beam3_7__mpnn4,FAIL,219,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.721,8D04_F,TM 0.72 to 8D04_F
+hgnt__steer_tmol__b02_c0000_no_trp_5_beam3_2__shell1,PASS,252,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.494,2JPS_A,
+hgnt__steer_tmol__b02_c0000_no_trp_5_beam3_2__mpnn4,PASS,252,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.501,2MQA_A,
+hgwt__steer_tmol_ch18__b03_c0025_with_trp_24_beam3_5__mpnn4,PASS-with-warnings,219,0.0,,,no hit with e<1e-3,0,0.0,,,no hit with e<1e-3,0,0.686,23WU_D,TM 0.69 to 23WU_D
+CONTROL_HG3.17_published,FAIL,312,1.0,1.0,1.0,5rg8_A,312,0.0,,,no hit with e<1e-3,0,0.983,1B30_A,length; pdb identity 1.00; pdb aligned identity 1.00 over cov 1.0; TM 0.98 to 1B30_A; pdb >=90% stretch of 312 aa

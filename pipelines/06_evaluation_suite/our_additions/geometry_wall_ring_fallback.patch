@@ -1,0 +1,11 @@
+--- /mnt/work/projects/Maxi/pipeline/src/maxi_eval/geometry.py	2026-11-22 08:37:09.976785366 +0000
++++ /mnt/work/projects/tobi_v1/maxi_eval/src/maxi_eval/geometry.py	2026-11-22 08:36:52.026754908 +0000
+@@ -272,7 +272,7 @@
+     P = Atoms.of(rep.protein)
+     pts = np.array([P.xyz(w["resid"], a) for a in w["ring"] if P.xyz(w["resid"], a) is not None])
+     bz = np.array([ly[n] for n in roles["benzo"]])
+-    if pts.ndim != 2 or len(pts) < 3 or bz.ndim != 2 or len(bz) < 3:   # ring atoms missing (e.g. PLACER pocket crop) -> no plane
++    if pts.ndim != 2 or len(pts) < 3 or len(bz) < 3:      # wall ring atoms missing (e.g. cropped PLACER model): no wall metrics
+         return {"geo.wall_found": 0.0}
+     n1, n2 = plane_normal(pts), plane_normal(bz)
+     ang = float(np.degrees(np.arccos(abs(np.clip(n1 @ n2, -1, 1)))))

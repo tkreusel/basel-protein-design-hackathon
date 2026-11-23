@@ -1,0 +1,291 @@
+provenance: derived from crystal_geometry.csv; TSA (6NT) crystal/NMR complexes, ideal-H
+  geometry
+groups:
+  hg3_lineage:
+    n_copies: 8
+    constraints:
+      geo.d_O_X:
+        mean: 2.475
+        sd: 0.148
+        min: 2.23
+        max: 2.689
+        n: 8
+        kind: linear
+        tol: 0.297
+        force_k: 100.0
+      geo.d_O_H:
+        mean: 1.504
+        sd: 0.126
+        min: 1.31
+        max: 1.707
+        n: 8
+        kind: linear
+        tol: 0.253
+        force_k: 100.0
+      geo.ang_O_H_X:
+        mean: 163.833
+        sd: 8.324
+        min: 149.556
+        max: 174.133
+        n: 8
+        kind: linear
+        tol: 16.648
+        force_k: 50.0
+      geo.ang_C_O_H:
+        mean: 128.067
+        sd: 3.672
+        min: 122.946
+        max: 133.523
+        n: 8
+        kind: linear
+        tol: 12.0
+        force_k: 50.0
+      geo.tors_syn:
+        mean: 166.627
+        sd: 24.438
+        dev_min: -39.04
+        dev_max: 29.293
+        n: 8
+        kind: circular
+        tol: 48.877
+        force_k: 30.0
+      geo.oop_H:
+        mean: -10.154
+        sd: 18.527
+        min: -39.26
+        max: 12.709
+        n: 8
+        kind: linear
+        tol: 37.054
+        force_k: 30.0
+      geo.tors_C_O_H_X:
+        mean: 143.401
+        sd: 39.035
+        dev_min: -48.194
+        dev_max: 68.504
+        n: 8
+        kind: circular
+        tol: 78.07
+        force_k: 20.0
+      geo.tors_O_H_X_C3A:
+        mean: 51.662
+        sd: 53.09
+        dev_min: -101.921
+        dev_max: 37.166
+        n: 8
+        kind: circular
+        tol: 106.18
+        force_k: 20.0
+      geo.wall_d_centroid:
+        mean: 5.081
+        sd: 0.271
+        min: 4.793
+        max: 5.53
+        n: 8
+        kind: linear
+        tol: 0.543
+        force_k: 20.0
+      geo.wall_plane_angle:
+        mean: 23.045
+        sd: 5.519
+        min: 16.519
+        max: 33.052
+        n: 8
+        kind: linear
+        tol: 11.038
+        force_k: 10.0
+  kable2_5_nmr:
+    n_copies: 10
+    constraints:
+      geo.d_O_X:
+        mean: 2.626
+        sd: 0.035
+        min: 2.562
+        max: 2.692
+        n: 10
+        kind: linear
+        tol: 0.25
+        force_k: 100.0
+      geo.d_O_H:
+        mean: 2.089
+        sd: 0.016
+        min: 2.047
+        max: 2.105
+        n: 10
+        kind: linear
+        tol: 0.25
+        force_k: 100.0
+      geo.ang_O_H_X:
+        mean: 111.621
+        sd: 3.387
+        min: 105.616
+        max: 116.4
+        n: 10
+        kind: linear
+        tol: 15.0
+        force_k: 50.0
+      geo.ang_C_O_H:
+        mean: 105.983
+        sd: 8.108
+        min: 89.64
+        max: 114.848
+        n: 10
+        kind: linear
+        tol: 16.215
+        force_k: 50.0
+      geo.tors_syn:
+        mean: -156.606
+        sd: 23.212
+        dev_min: -31.738
+        dev_max: 30.644
+        n: 10
+        kind: circular
+        tol: 46.424
+        force_k: 30.0
+      geo.oop_H:
+        mean: 22.877
+        sd: 22.917
+        min: -7.795
+        max: 53.307
+        n: 10
+        kind: linear
+        tol: 45.834
+        force_k: 30.0
+      geo.tors_C_O_H_X:
+        mean: -165.472
+        sd: 16.37
+        dev_min: -20.232
+        dev_max: 24.217
+        n: 10
+        kind: circular
+        tol: 32.741
+        force_k: 20.0
+      geo.tors_O_H_X_C3A:
+        mean: 88.808
+        sd: 7.556
+        dev_min: -7.792
+        dev_max: 14.607
+        n: 10
+        kind: circular
+        tol: 30.0
+        force_k: 20.0
+      geo.wall_d_centroid:
+        mean: 6.095
+        sd: 0.087
+        min: 6.0
+        max: 6.278
+        n: 10
+        kind: linear
+        tol: 0.5
+        force_k: 20.0
+      geo.wall_plane_angle:
+        mean: 39.174
+        sd: 1.469
+        min: 35.888
+        max: 41.252
+        n: 10
+        kind: linear
+        tol: 10.0
+        force_k: 10.0
+  hg3_with_gln50:
+    n_copies: 4
+    constraints:
+      geo.d_O_X:
+        mean: 2.59
+        sd: 0.059
+        min: 2.532
+        max: 2.689
+        n: 4
+        kind: linear
+        tol: 0.25
+        force_k: 100.0
+      geo.d_O_H:
+        mean: 1.608
+        sd: 0.06
+        min: 1.547
+        max: 1.707
+        n: 4
+        kind: linear
+        tol: 0.25
+        force_k: 100.0
+      geo.ang_O_H_X:
+        mean: 166.234
+        sd: 1.023
+        min: 164.525
+        max: 167.24
+        n: 4
+        kind: linear
+        tol: 15.0
+        force_k: 50.0
+      geo.ang_C_O_H:
+        mean: 125.119
+        sd: 1.54
+        min: 122.946
+        max: 126.671
+        n: 4
+        kind: linear
+        tol: 12.0
+        force_k: 50.0
+      geo.tors_syn:
+        mean: 176.546
+        sd: 18.37
+        dev_min: -20.535
+        dev_max: 19.374
+        n: 4
+        kind: circular
+        tol: 36.74
+        force_k: 30.0
+      geo.oop_H:
+        mean: -2.718
+        sd: 14.864
+        min: -19.083
+        max: 12.709
+        n: 4
+        kind: linear
+        tol: 29.729
+        force_k: 30.0
+      geo.tors_C_O_H_X:
+        mean: 174.634
+        sd: 35.352
+        dev_min: -38.723
+        dev_max: 37.271
+        n: 4
+        kind: circular
+        tol: 70.704
+        force_k: 20.0
+      geo.tors_O_H_X_C3A:
+        mean: 6.794
+        sd: 54.751
+        dev_min: -57.053
+        dev_max: 58.751
+        n: 4
+        kind: circular
+        tol: 109.503
+        force_k: 20.0
+      geo.wall_d_centroid:
+        mean: 5.173
+        sd: 0.356
+        min: 4.793
+        max: 5.53
+        n: 4
+        kind: linear
+        tol: 0.712
+        force_k: 20.0
+      geo.wall_plane_angle:
+        mean: 26.701
+        sd: 5.574
+        min: 20.92
+        max: 33.052
+        n: 4
+        kind: linear
+        tol: 11.148
+        force_k: 10.0
+      geo.donor_best_d:
+        mean: 3.037
+        sd: 0.039
+        min: 3.003
+        max: 3.102
+        n: 4
+        kind: linear
+        tol: 0.25
+        force_k: 100.0

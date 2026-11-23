@@ -1,0 +1,60 @@
+# RFD4 spec B: TIP ATOMS only + ligand burial conditioning.
+#
+# Same as spec A (kemp_rfd4_full_buried.yaml) except that coordinate
+# conditioning covers only the catalytic FUNCTIONAL GROUPS, not whole
+# residues. The model then infers the rest of each side chain and the backbone
+# placement itself.
+#
+# Rationale -- KEMP_PIPELINE_PLAN.md section 6.2:
+#   "Use atomised, unindexed motif conditioning: supply only the
+#    functional-group atoms (carboxylate OD1/OD2, donor heavy atom, aromatic
+#    ring atoms), not full residues with fixed sequence positions.
+#    RFdiffusion2's own ablation found inferring rotamers and indices during
+#    sampling beat supplying native values."
+#
+# Tip-atom selection is taken verbatim from the organisers' Kemp.json, which
+# is already validated against RFD3:
+#     A127 (base)  OD1, CG, OD2     the carboxylate
+#     A50  (donor) OE1, CD, NE2     the amide
+#     A44  (wall)  CD1, NE1, CE2    part of the indole ring
+#     6NT          ALL
+#
+# Note on an unavoidable coupling (docs/concepts/conditioning.md): fixing ANY
+# sidechain coordinate forces sequence conditioning, because the atom37 slot
+# occupancy fingerprints the residue. So C_SEQ below is not an extra
+# restriction -- we want those identities fixed anyway. What tip-atom
+# conditioning buys is freedom in the ROTAMER (chi angles) and in where the
+# backbone sits, not freedom in identity.
+#
+# Comparison set, all 32 designs, seeds in the same family:
+#   full motif, no burial : runs/2026-11-21_rfd4-backbones_job13_...  12/32
+#   full motif + burial   : job 21  (spec A)
+#   tip atoms + burial    : this spec
+
+kemp_tip_atoms_buried:
+  input: ./kemp_motif.cif
+  contig: "E1:150-250, A44, A50, A127, /0, L1305"
+  conditions:
+    C_SEQ:
+      true:
+        - select: "sel('A/*/[44, 50, 127]')"
+    C_CRD:
+      # Functional-group atoms only. Everything else about these residues --
+      # backbone position, remaining sidechain atoms, chi angles -- is the
+      # model's choice.
+      true:
+        - select: "sel('A/*/127/[OD1,CG,OD2]')"
+        - select: "sel('A/*/50/[OE1,CD,NE2]')"
+        - select: "sel('A/*/44/[CD1,NE1,CE2]')"
+        - select: "sel('L')"
+    C_RAS:
+      BURIED:
+        - select: "sel('L')"
+    C_IDX:
+      false:
+        - select: "sel('A/*/44')"
+          group: wall
+        - select: "sel('A/*/50')"
+          group: donor
+        - select: "sel('A/*/127')"
+          group: base

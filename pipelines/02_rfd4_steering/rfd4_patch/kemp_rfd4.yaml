@@ -1,0 +1,20 @@
+# RFD4 Kemp motif scaffolding. W44/Q50/D127 side-chain tips fixed + unindexed, 6NT fixed; scaffold 150-260 aa total.
+kemp_free:
+  input: kemp_motif.cif
+  contig: "A44, A50, A127, EX1:147-257, /0, B1"
+  conditions: &cond
+    C_CRD:
+      true:
+        - select: "sel('A/*/44/[CG,CD1,CD2,NE1,CE2,CE3,CZ2,CZ3,CH2]')"
+        - select: "sel('A/*/50/[CG,CD,OE1,NE2]')"
+        - select: "sel('A/*/127/[CB,CG,OD1,OD2]')"
+        - select: "sel('B')"
+    C_SEQ:
+      true:
+        - select: "sel('A/*/[44,50,127]')"
+        - select: "sel('B')"
+    C_IDX:
+      false:
+        - {select: "sel('A/*/44')", group: m44}
+        - {select: "sel('A/*/50')", group: m50}
+        - {select: "sel('A/*/127')", group: m127}

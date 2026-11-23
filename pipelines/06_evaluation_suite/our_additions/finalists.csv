@@ -1,0 +1,13 @@
+id,why,source
+hgnt__steer_base_tmol__no_trp_0_beam3_5__rfd4,"Maxi steered, 5-seed rank 1",/mnt/work/projects/tobi_v1/runs/2026-11-22_host-style-multiseed_pool-v1_5seeds/seed_0/boltz_results_chunk_002/predictions/hgnt__steer_base_tmol__no_trp_0_beam3_5__rfd4
+hgnt__steer_base_tmol__no_trp_0_beam3_6__rfd4,"Maxi steered, 5-seed rank 2",/mnt/work/projects/tobi_v1/runs/2026-11-22_host-style-multiseed_pool-v1_5seeds/seed_0/boltz_results_chunk_002/predictions/hgnt__steer_base_tmol__no_trp_0_beam3_6__rfd4
+hgnt__steer_base_tmol__no_trp_0_beam3_5__mpnn3,"Maxi steered, 5-seed rank 3",/mnt/work/projects/tobi_v1/runs/2026-11-22_host-style-multiseed_pool-v1_5seeds/seed_0/boltz_results_chunk_002/predictions/hgnt__steer_base_tmol__no_trp_0_beam3_5__mpnn3
+full-ce941bbd5c43,"ours, 5-seed rank 4",/mnt/work/projects/tobi_v1/runs/2026-11-22_host-style-multiseed_pool-v1_5seeds/seed_0/boltz_results_chunk_000/predictions/full-ce941bbd5c43
+full-af14b3c83c24_s4,"ours, 5-seed rank 5",/mnt/work/projects/tobi_v1/runs/2026-11-22_host-style-multiseed_pool-v1_5seeds/seed_0/boltz_results_chunk_000/predictions/full-af14b3c83c24_s4
+kemp4_with_trp_128__rfd4,"unsteered overnight, single-seed rank 1",/mnt/work/projects/tobi_v1/runs/2026-11-21_unsteered-control_job60_250designs_seed7/boltz_out/chunk_00/boltz_results_chunk_00/predictions/kemp4_with_trp_128__rfd4
+kemp4_with_trp_126__mpnn2,"unsteered overnight, single-seed top",/mnt/work/projects/tobi_v1/runs/2026-11-21_unsteered-control_job60_250designs_seed7/boltz_out/chunk_03/boltz_results_chunk_03/predictions/kemp4_with_trp_126__mpnn2
+kemp4_with_trp_248__mpnn2,"unsteered overnight, single-seed top",/mnt/work/projects/tobi_v1/runs/2026-11-21_unsteered-control_job60_250designs_seed7/boltz_out/chunk_03/boltz_results_chunk_03/predictions/kemp4_with_trp_248__mpnn2
+kemp4_with_trp_230__mpnn1,"unsteered overnight, single-seed top",/mnt/work/projects/tobi_v1/runs/2026-11-21_unsteered-control_job60_250designs_seed7/boltz_out/chunk_01/boltz_results_chunk_01/predictions/kemp4_with_trp_230__mpnn1
+p08_f0.5_2__mpnn3,"partial diffusion child, best gain over parent",/mnt/work/projects/tobi_v1/runs/2026-11-22_partial-diffusion_job62_12parents_8reps/boltz_out/chunk_02/boltz_results_chunk_02/predictions/p08_f0.5_2__mpnn3
+p05_f0.3_0__mpnn2,partial diffusion child,/mnt/work/projects/tobi_v1/runs/2026-11-22_partial-diffusion_job62_12parents_8reps/boltz_out/chunk_01/boltz_results_chunk_01/predictions/p05_f0.3_0__mpnn2
+p11_f0.5_4__mpnn1,partial diffusion child,/mnt/work/projects/tobi_v1/runs/2026-11-22_partial-diffusion_job62_12parents_8reps/boltz_out/chunk_02/boltz_results_chunk_02/predictions/p11_f0.5_4__mpnn1

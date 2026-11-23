@@ -1,0 +1,74 @@
+# RFD4-Proteina condition spec: scaffold a de novo protein around the HG3.17
+# Kemp eliminase active site.
+#
+# Motif (from inputs/kemp_motif.cif, converted from the organisers'
+# HG3_17_kemp_motif.pdb; numbering verified label_seq_id == auth_seq_id):
+#   A44   TRP  aromatic pocket wall
+#   A50   GLN  oxyanion donor  (NE2 -> 6NT N1, 3.10 A)
+#   A127  ASP  catalytic base  (OD2 -> 6NT N3, 2.53 A)
+#   A1305 6NT  6-nitrobenzotriazole, transition-state analogue
+#
+# Encoding rationale (docs/concepts/conditioning.md + reference/yaml-json.md):
+#
+#   C_SEQ true on 44/50/127
+#       Fix the catalytic identities. Required anyway: fixing a sidechain
+#       coordinate forces sequence conditioning, because the atom37 slot
+#       occupancy fingerprints the residue.
+#
+#   C_CRDGRP 1 over ALL motif atoms INCLUDING the ligand
+#       One coordinate group = one internally rigid body whose placement in
+#       space is free. This is the theozyme: the base, donor, wall and ligand
+#       must hold their relative geometry (that geometry IS the catalyst), but
+#       where the assembly sits in the scaffold is the model's choice.
+#       Putting them in separate groups would let the relative geometry drift
+#       and destroy the active site.
+#
+#   C_IDX false, a DIFFERENT group label per residue
+#       Unindexed motif (plan 6.2). Selections sharing a label keep their
+#       relative residue offsets; separate labels make the offsets
+#       independent. We want independent: the model should choose where each
+#       catalytic residue falls in sequence, not inherit HG3's 44/50/127
+#       spacing.
+#
+# Length: expandable segment 150-250 plus the 3 motif residues = 153-253
+# total, so the competition's 260 cap is never binding (plan 6.2).
+#
+# The ligand needs no C_SEQ: atomised tokens are always sequence-conditioned
+# and never generated, and the inference pipeline sets that automatically.
+
+kemp_theozyme_unindexed:
+  input: ./kemp_motif.cif
+  contig: "E1:150-250, A44, A50, A127, /0, L1305"
+  conditions:
+    # Declaration order matters: overlapping entries for the SAME annotation
+    # resolve last-write-wins, and C_CRDGRP must come after C_CRD so the motif
+    # ends up as an independently-placed rigid body rather than pinned
+    # absolutely.
+    C_SEQ:
+      true:
+        - select: "sel('A/*/[44, 50, 127]')"
+    C_CRD:
+      # THE geometric target: absolute (global-frame) coordinate conditioning
+      # on the whole theozyme -- the three catalytic residues plus the ligand.
+      #
+      # Why absolute and NOT C_CRDGRP: the docs say C_CRD "works for a single
+      # rigid motif, but it can't express 'these atoms are rigid relative to
+      # each other, but I don't know or care where that rigid body sits in
+      # space'". We have exactly ONE rigid motif, so absolute conditioning is
+      # sufficient and correct; the coordinate-group machinery exists for
+      # several *independently placed* motifs. The global frame is arbitrary
+      # here anyway, because the scaffold is generated around the motif.
+      #
+      # Measured failures that led here (docs/TOOL_NOTES.md):
+      #   C_CRDGRP alone          -> 0/10 kept the site, base 8.1-23.0 A
+      #   C_CRD false + C_CRDGRP  -> still broken, base 13.1 A
+      true:
+        - select: "sel('A/*/[44, 50, 127]') or sel('L')"
+    C_IDX:
+      false:
+        - select: "sel('A/*/44')"
+          group: wall
+        - select: "sel('A/*/50')"
+          group: donor
+        - select: "sel('A/*/127')"
+          group: base

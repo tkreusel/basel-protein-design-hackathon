@@ -1,0 +1,46 @@
+# RFD4 spec A: FULL motif + ligand burial conditioning.
+#
+# Identical to the working inputs/kemp_rfd4.yaml, plus C_RAS BURIED on the
+# ligand atoms.
+#
+# Why: the working spec produced perfect catalytic geometry in 32/32 designs
+# but a buried pocket in only 12/32 (37.5%). The other 20 had the ligand on
+# the protein surface, up to 54% solvent-exposed, with the catalytic residues
+# merely reaching onto it. Nothing in the spec asked for enclosure, so RFD4
+# had no reason to provide it.
+#
+# C_RAS is RFD4's RASA conditioning: a BINNED per-atom enum
+# (BURIED / INTERMEDIATE / EXPOSED / UNSPECIFIED), not the continuous
+# {0.0, 0.1, 0.2, 0.3} sweep KEMP_PIPELINE_PLAN.md section 5.2 assumed.
+# Training definition: binned Shrake-Rupley surface area at fixed edges.
+#
+# Hypothesis under test: asking for a buried ligand raises the pocket hit rate
+# above 37.5%, making it cheaper than generating 2.7x as many designs and
+# filtering. Baseline for comparison:
+#   runs/2026-11-21_rfd4-backbones_job13_32designs_seed101/  (12/32)
+
+kemp_full_motif_buried:
+  input: ./kemp_motif.cif
+  contig: "E1:150-250, A44, A50, A127, /0, L1305"
+  conditions:
+    C_SEQ:
+      true:
+        - select: "sel('A/*/[44, 50, 127]')"
+    C_CRD:
+      # Absolute coordinate conditioning on the whole theozyme. NOT C_CRDGRP:
+      # this is a single rigid motif, and C_CRDGRP silently produced designs
+      # with no active site at all (docs/TOOL_NOTES.md).
+      true:
+        - select: "sel('A/*/[44, 50, 127]') or sel('L')"
+    C_RAS:
+      # THE NEW CONSTRAINT: bury the ligand.
+      BURIED:
+        - select: "sel('L')"
+    C_IDX:
+      false:
+        - select: "sel('A/*/44')"
+          group: wall
+        - select: "sel('A/*/50')"
+          group: donor
+        - select: "sel('A/*/127')"
+          group: base

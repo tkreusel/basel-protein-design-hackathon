@@ -1,0 +1,13 @@
+motif,family,sheet,designs,lineages,pass_geom,pass_seq,pass_core,ch18_ok,tmol_median,bottleneck_median,sequences_boltz1,boltz_strict,designs_with_strict
+hgnt,steer_tmol,False,3000,1000,0.499,0.508,0.229,0.059,-14.936,0.9,4116,102,67
+hgnt,steer_tmol,True,60,20,0.0,0.4,0.0,0.0,-14.09,0.8,360,0,0
+hgnt,steer_tmol_ch18,False,3000,1000,0.368,0.441,0.134,0.259,-14.196,1.5,2442,34,25
+hgnt,steer_tmol_ch18,True,60,20,0.05,0.45,0.0,0.15,-11.712,1.25,360,0,0
+hgnt,unsteered,False,600,600,0.308,0.075,0.012,0.085,-13.479,1.1,925,10,6
+hgnt,unsteered,True,60,60,0.017,0.017,0.0,0.15,-10.773,1.1,290,0,0
+hgwt,steer_tmol,False,3000,1000,0.401,0.648,0.253,0.063,-13.462,1.1,2478,4,4
+hgwt,steer_tmol,True,60,20,0.1,0.65,0.1,0.0,-12.314,1.0,324,0,0
+hgwt,steer_tmol_ch18,False,3000,1000,0.26,0.592,0.148,0.311,-13.006,1.6,2670,26,16
+hgwt,steer_tmol_ch18,True,60,20,0.0,0.617,0.0,0.15,-9.45,1.725,342,0,0
+hgwt,unsteered,False,600,600,0.217,0.118,0.028,0.107,-11.767,1.1,650,0,0
+hgwt,unsteered,True,60,60,0.0,0.233,0.0,0.133,-3.616,1.875,260,0,0

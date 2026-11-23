@@ -1,0 +1,18 @@
+# Theozyme GDM_KE_1483: Glu1 (CG,CD,OE1,OE2), Ser2 (CA,CB,OG), 6NT; all atoms of the file fixed (coordinates + identity), residues unindexed.
+kemp2_plain:
+  input: kemp2_theozyme.cif
+  contig: "A1, A2, EX1:148-258, /0, B1"
+  conditions: &base
+    C_CRD:
+      true:
+        - select: "sel('A/*/1/[CG,CD,OE1,OE2]')"
+        - select: "sel('A/*/2/[CA,CB,OG]')"
+        - select: "sel('B')"
+    C_SEQ:
+      true:
+        - select: "sel('A/*/[1,2]')"
+        - select: "sel('B')"
+    C_IDX:
+      false:
+        - {select: "sel('A/*/1')", group: base}
+        - {select: "sel('A/*/2')", group: ser}

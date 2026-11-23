@@ -1,0 +1,94 @@
+source_copies:
+- 7K4Z/A
+- 4BS0/A
+- 4BS0/B
+- 7K4X/A
+- 7K4X/B
+- 8RD5/A
+- 8RD5/B
+- 7K4U/A
+n_copies: 8
+metrics:
+  b_dist:
+    mean: 2.5519106090068817
+    sd: 0.06167069039071566
+    floor: 0.25
+    sigma: 0.25
+    min: 2.4911863803863525
+    max: 2.6893322467803955
+  b_ang_O:
+    mean: 129.74772357940674
+    sd: 1.8450086052996006
+    floor: 10.0
+    sigma: 10.0
+    min: 127.30712127685547
+    max: 133.07835388183594
+  b_ang_NH:
+    mean: 9.180936753749847
+    sd: 2.785082796844214
+    floor: 10.0
+    sigma: 10.0
+    min: 4.266637802124023
+    max: 13.013671875
+  b_oop:
+    mean: 7.096218317747116
+    sd: 2.7285815957334445
+    floor: 10.0
+    sigma: 10.0
+    min: 2.982342004776001
+    max: 11.743651390075684
+  b_dih:
+    mean: 8.179129898548126
+    sd: 2.98632595274805
+    floor: 10.0
+    sigma: 10.0
+    min: 3.71047306060791
+    max: 13.44651985168457
+  d_dist:
+    mean: 3.048241972923279
+    sd: 0.07895038270121353
+    floor: 0.25
+    sigma: 0.25
+    min: 2.9645349979400635
+    max: 3.1974010467529297
+  d_ang_N:
+    mean: 135.51998901367188
+    sd: 2.351537361528905
+    floor: 10.0
+    sigma: 10.0
+    min: 133.50537109375
+    max: 140.74668884277344
+  d_ang_ax:
+    mean: 12.787588357925415
+    sd: 3.8692048790979254
+    floor: 10.0
+    sigma: 10.0
+    min: 7.513138294219971
+    max: 18.124374389648438
+  d_oop:
+    mean: 8.31216199696064
+    sd: 6.3848920638153
+    floor: 10.0
+    sigma: 10.0
+    min: 0.5586662292480469
+    max: 16.063077926635742
+  d_dih:
+    mean: 9.327618166804314
+    sd: 6.185334000878569
+    floor: 10.0
+    sigma: 10.0
+    min: 1.3239575624465942
+    max: 18.28400421142578
+  burial_CG:
+    mean: 45.875
+    sd: 0.6408699444616557
+    min: 45.0
+    max: 47.0
+  burial_O:
+    mean: 49.375
+    sd: 1.1877349391654208
+    min: 48.0
+    max: 51.0
+notes: ideal = crystal mean; geometry score per metric = exp(-0.5 z^2) with z = (x
+  - mean)/sigma, sigma = max(sd, floor); dihedral/oop by magnitude; burial score =
+  min(1, count / mean)

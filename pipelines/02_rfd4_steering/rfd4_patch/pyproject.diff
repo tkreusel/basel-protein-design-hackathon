@@ -1,0 +1,12 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 43abd0f..0e6669a 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -106,7 +106,6 @@ all-cuda13 = [
+     "cuequivariance-torch>=0.13.0,<0.14; sys_platform == 'linux'",
+     "cuequivariance-ops-cu13>=0.13.0,<0.14; sys_platform == 'linux'",
+     "cuequivariance-ops-torch-cu13>=0.13.0,<0.14; sys_platform == 'linux'",
+-    "bionemo-ir>=0.2.1,<0.3; sys_platform == 'linux'",
+ ]
+ all-cuda12 = [
+     "tmol[cu12]>=0.2.0,<0.3; sys_platform == 'linux'",
