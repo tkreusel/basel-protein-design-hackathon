@@ -24,7 +24,7 @@ source env/paths.sh
 | env-ligandmpnn | `$ENV_ROOT/env-ligandmpnn/bin/python` | sequence design (stage 2) |
 | env-boltz2 | `$ENV_ROOT/env-boltz2/bin/boltz` | fold + interface (stage 5) |
 
-### ⚠️ The one trap
+### The one trap
 
 `/mnt/work/repos/RFD4-Proteina/.venv` — **the default-named venv — is broken.**
 It has torch `cu132` and cannot see the GPU on this driver. Always use

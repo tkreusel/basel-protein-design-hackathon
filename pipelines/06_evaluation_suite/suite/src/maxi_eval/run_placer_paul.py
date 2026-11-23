@@ -21,7 +21,7 @@ def main():
     ap.add_argument("--max-replicates", type=int, default=None)
     ap.add_argument("--modes", default="holo,apo")
     ap.add_argument("--ligand", default="6NT")
-    ap.add_argument("--placer-root", default=os.environ.get("PLACER_ROOT", "/mnt/work/repos/placer"))
+    ap.add_argument("--placer-root", default=os.environ.get("PLACER_ROOT"))
     ap.add_argument("--threads", type=int, default=None)
     a = ap.parse_args()
     sys.path.insert(0, a.placer_root)

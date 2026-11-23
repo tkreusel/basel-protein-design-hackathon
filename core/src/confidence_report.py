@@ -10,7 +10,7 @@ Answers two things:
 
 ipSAE direction: ipsae2 emits chn1->chn2 as `ipsae12`. Our Boltz inputs put
 protein on chain A and ligand on chain B, so `ipsae12` is the
-**protein->ligand** direction that KEMP_PIPELINE_PLAN.md section 6.6 asks for.
+**protein->ligand** direction that the original pipeline plan, section 6.6 asks for.
 Plain `iptm` is reported alongside to show how much more optimistic it is --
 the plan warns a single ligand atom can dominate it.
 

@@ -164,7 +164,10 @@ def main():
                 if a.field_models and field_ctx is None:
                     from . import tmol_core as TC
                     field_ctx = (TC.Session.create(Path(a.ligand_dir), ref_rep.protein, T), T)
-                out, df = summarize(load_models(pdb), ref_rep, site, constraints, csv, mode, field_ctx, a.field_models)
+                try:
+                    out, df = summarize(load_models(pdb), ref_rep, site, constraints, csv, mode, field_ctx, a.field_models)
+                except Exception as exc:     # one bad model must not cost the whole run its PLACER summary
+                    print("ANALYSIS FAILED", r["rep_id"], mode, f"{type(exc).__name__}: {exc}"[:200], flush=True); continue
                 df.to_csv(f"{base}_{mode}_models.csv", index=False)
                 row.update({f"{pre}.{mode}.{k}": v for k, v in out.items()})
             summary.append(row)

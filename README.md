@@ -1,98 +1,77 @@
-# Team Substrate|Ventures
+# Team Substrate|Ventures: de novo Kemp eliminase design
 
-Benedict Wolf \
-Friederike Reinhardt \
-Maximilian Vassen \
-Paul Brunner \
-Tobias Kreusel
+Benedict Wolf, Friederike Reinhardt, Maximilian Vassen, Paul Brunner, Tobias Kreusel
 
-# Kemp eliminase de novo design — pipelines, configs and docs
+Code, configuration and documentation of our entry to the Protein Design Hackathon at D-BSSE (ETH Zurich, November 2026). The task was to design up to 20 protein sequences
+(50 to 260 residues) that Boltz-2 co-folds with the transition-state analogue 6NT such that a catalytic carboxylate sits next to the abstracted atom N3 and an oxyanion donor next to N1.
+Designs had to be novel (below 70 % sequence identity to published enzymes, TM-score at most 0.7 to published structures). The hosts ranked by catalytic contact distances and approach
+geometry, interface confidence (iPDE), active-site burial and pose consistency over repeated predictions. Our 20 sequences, on 10 distinct backbones, won the event. No design has been tested experimentally.
 
-Everything we built for the Protein Design Hackathon in Basel at D-BSSE (ETHZ) (Nov 2026): backbone generation with
-**RFD4-Proteina** (conditioning-only and reward-steered), sequence design with **LigandMPNN**, refolding with **Boltz-2**,
-a physics/ensemble evaluation suite (**ipSAE2, PLACER, tmol, PyRosetta**), a stand-in for the hosts' scoring, an eligibility
-gate (sequence identity / TM-score against published structures), BioEmu ensembles, a literature calibration, and the
-final selection that produced the 20 submitted designs (which won).
+## Approach
 
-> **Status:** this is a snapshot of working scripts, copied from the project folders as they were used.
-> Paths inside scripts are the cluster paths we ran on (`/mnt/work/projects/...`, `/mnt/work/repos/...`, `/mnt/ref/...`);
-> see [docs/02_ENVIRONMENTS_AND_CLUSTER.md](docs/02_ENVIRONMENTS_AND_CLUSTER.md) for the path map and what to change to re-run elsewhere.
-> Large data (model weights, raw RFD4 output, Boltz outputs, PDB mirrors, search databases) is **not** in this repo;
-> [docs/08_PROVENANCE_AND_DATA_LOCATIONS.md](docs/08_PROVENANCE_AND_DATA_LOCATIONS.md) says where each lives and how to regenerate it.
-
-## The task in one paragraph
-
-Design ≤ 20 protein sequences (50–260 aa) that, co-folded with the transition-state analogue **6NT** by Boltz-2,
-place a catalytic carboxylate (Asp/Glu) next to the abstracted atom (N3) and an oxyanion donor (Gln/Asn/Ser/…) next to the
-developing oxyanion (N1). Designs must be novel: < 70 % sequence identity to published enzymes and TM-score ≤ 0.7 to
-published structures. The hosts rank by catalytic contact distances and approach geometry (terms multiply and dominate),
-interface confidence (iPDE), active-site burial and pose consistency across repeated predictions
-([docs/reference/SUBMISSION_hosts_spec.md](docs/reference/SUBMISSION_hosts_spec.md)).
-
-## The pipeline at a glance
+Backbones come from RFD4-Proteina conditioned on the HG3.17 active site (Asp127, Gln50, optionally Trp44) around 6NT, either with conditioning alone or with an inference-time beam search on
+geometry rewards and the TMol interface energy. Sequences are designed with LigandMPNN with the motif fixed and polar and charged residues excluded around the catalytic base, and refolded with
+Boltz-2 (no MSA). Survivors are evaluated with substrate and product refolds, ipSAE2, PLACER ensembles, tmol and PyRosetta; candidates are filtered for novelty against the PDB and UniRef90 and ranked
+by a stand-in for the hosts' score multiplied by a literature-derived factor.
 
 ```
- theozyme (HG3.17: Asp127 + Gln50 [+ Trp44] + 6NT)                                  core/, pipelines/01
-        │
-        ▼
- RFD4-Proteina backbones ──┬─ conditioning only (unsteered)                          pipelines/01, 04
-                           ├─ reward-steered beam search (steer_tmol, +channel band)  pipelines/02
-                           └─ partial diffusion around good designs                  pipelines/05
-        │ design gate (burial, motif RMSD, base environment, clash)
-        ▼
- LigandMPNN (motif fixed; K R H D E N Q S T Y C forbidden near the base)             pipelines/01, 04
-        │
-        ▼
- Boltz-2 refold with 6NT (no MSA), 1x gate → 5 seeds → substrate/product arms        pipelines/01, 07
-        │
-        ├─► host-style stand-in score  (geometry² · iPDE · burial · consistency)     pipelines/07
-        ├─► evaluation suite (ipSAE2, PLACER, tmol, PyRosetta, features)             pipelines/06
-        ├─► eligibility gate (PDB/UniRef90 identity, Foldseek + US-align TM)         pipelines/08
-        └─► BioEmu ensembles + literature calibration                                pipelines/09
-        │
-        ▼
- merged top-80 → eligibility filter → judging × literature factor → top 20           pipelines/11 → results/
+theozyme (Asp127, Gln50, [Trp44], 6NT)
+  -> RFD4 backbones: conditioning only | steered beam search | partial diffusion
+  -> design gate (burial, pocket, clashes, motif RMSD, base environment)
+  -> LigandMPNN (motif fixed; K R H D E N Q S T Y C excluded near the base)
+  -> Boltz-2 refold with 6NT -> refold gate -> 10x TSA, 10x substrate, 10x product
+  -> ipSAE2, PLACER, tmol, PyRosetta; host-style score; BioEmu
+  -> eligibility (identity, TM-score) -> literature-calibrated ranking -> top 20
 ```
 
-## Repository map
+The campaign that produced most of the final designs generated 10,500 backbones in six motif/arm combinations. Steering raised the fraction of backbones passing the base-environment gate from 1 to 3 %
+to 13 to 25 %, but the pass criteria are also the rewards, and the dominant loss is downstream: the median ligand RMSD between Boltz-2 refold and design is 3 to 4.5 A. Of 11,385 refolded sequences, 153 pass
+the strict refold gate. Details and numbers are in [pipelines/02_rfd4_steering](pipelines/02_rfd4_steering) and [docs/06_RESULTS_AND_FUNNELS.md](docs/06_RESULTS_AND_FUNNELS.md).
 
-| Path | What is in it |
+## Repository
+
+| Path | Content |
 |---|---|
-| [`docs/`](docs/) | numbered documentation (start with `00`), plus `docs/reference/` = original project notes kept verbatim |
-| [`core/`](core/) | shared library and foundation: geometry (`src/kemp`), motif/burial/atom-map scripts, calibrated thresholds, tests, `env/paths.sh`, the 6NT ligand |
-| [`pipelines/01_backbones_sequence_refold/`](pipelines/01_backbones_sequence_refold/) | stage 1–5 Slurm jobs and RFD4 input specs (theozyme conditioning) |
-| [`pipelines/02_rfd4_steering/`](pipelines/02_rfd4_steering/) | reward-steered RFD4 (beam search), custom metrics, round drivers, and the campaign result tables from the large cluster run |
-| [`pipelines/04_overnight_unsteered_control/`](pipelines/04_overnight_unsteered_control/) | one-job unsteered control: generate → select → LigandMPNN → Boltz → score |
-| [`pipelines/05_partial_diffusion/`](pipelines/05_partial_diffusion/) | partial diffusion around best designs with a CPU rejection filter |
-| [`pipelines/06_evaluation_suite/`](pipelines/06_evaluation_suite/) | the ipSAE2 / PLACER / tmol / PyRosetta suite and our additions and patches |
-| [`pipelines/07_host_style_scoring/`](pipelines/07_host_style_scoring/) | stand-in for the hosts' score, multi-seed Boltz consistency, calibration against crystals |
-| [`pipelines/08_eligibility/`](pipelines/08_eligibility/) | identity and TM-score novelty gate with local tools only |
-| [`pipelines/09_bioemu/`](pipelines/09_bioemu/) | BioEmu-2 ensemble analysis and the literature-correlation study |
-| [`pipelines/11_selection_and_submission/`](pipelines/11_selection_and_submission/) | merged pool, literature-calibrated re-ranking, FASTA/validator/submit scripts, tables |
-| [`results/`](results/) | the 20 submitted designs' structures (Boltz refold and RFD4 backbone) |
+| [`pipelines/02_rfd4_steering/`](pipelines/02_rfd4_steering) | the campaign pipeline: configuration, stage modules, job scripts, tests, figures, result tables. Start here to re-run the generation |
+| [`pipelines/06_evaluation_suite/`](pipelines/06_evaluation_suite) | ipSAE2, PLACER, tmol and PyRosetta evaluation |
+| [`pipelines/01_backbones_sequence_refold/`](pipelines/01_backbones_sequence_refold), [`04_overnight_unsteered_control/`](pipelines/04_overnight_unsteered_control), [`05_partial_diffusion/`](pipelines/05_partial_diffusion) | early rounds, the one-job unsteered control, partial diffusion |
+| [`pipelines/07_host_style_scoring/`](pipelines/07_host_style_scoring) | stand-in for the hosts' score, multi-seed consistency, calibration on crystals |
+| [`pipelines/08_eligibility/`](pipelines/08_eligibility) | identity and TM-score novelty gate with local databases |
+| [`pipelines/09_bioemu/`](pipelines/09_bioemu) | BioEmu-2 ensembles and the literature correlation |
+| [`pipelines/11_selection_and_submission/`](pipelines/11_selection_and_submission) | merged pool, literature-calibrated ranking, FASTA validation and upload |
+| [`core/`](core) | geometry library, motif and burial checks, calibrated thresholds, tests, the 6NT ligand |
+| [`results/`](results) | structures of the 20 submitted designs |
+| [`docs/`](docs) | method, scoring, results and lessons; `docs/reference/` holds working notes from the event |
+| [`archive/`](archive) | superseded round 4/5 steering code |
 
-(Numbers `03` and `10` are intentionally unused: sequence design and refolding live inside `01`/`04`; the literature calibration
-lives with BioEmu in `09` and `11`.)
+## Using it
 
-## Result
+The campaign pipeline and the evaluation suite are configured through `pipelines/02_rfd4_steering/config/site.env` and contain no machine-specific paths.
+The scripts under `core/` and the other pipelines were copied as run and still refer to the hackathon cluster (`/mnt/work/...`); [docs/02](docs/02_ENVIRONMENTS_AND_CLUSTER.md) lists what to change.
+Model weights, raw outputs and search databases are not included; [docs/08](docs/08_PROVENANCE_AND_DATA_LOCATIONS.md) says where each lives and how to regenerate it.
 
-The submission was 20 sequences on **10 distinct backbones** (US-align clustering of the RFD4 designs, identical at TM 0.6/0.8/0.9):
-10 designs from the big-cluster overnight campaign (9 steered, 1 unsteered), 6 from its earlier steered round (round 4/5, all steered), 4 from our own unsteered runs. The list, with
-generation method per design, is in [docs/06_RESULTS_AND_FUNNELS.md](docs/06_RESULTS_AND_FUNNELS.md).
+```bash
+cd pipelines/02_rfd4_steering
+cp config/site.env.example config/site.env && $EDITOR config/site.env
+bash jobs/install_rfd4.sh
+PYTHONPATH=src python -m pytest tests -q        # checks the gates, seeds and rankings against the campaign's own tables
+```
 
-## Where to start
-
-| If you want to … | read |
+| To | Read |
 |---|---|
-| understand what we did and why | [docs/00_PROJECT_OVERVIEW.md](docs/00_PROJECT_OVERVIEW.md), [docs/01_PIPELINE_MAP.md](docs/01_PIPELINE_MAP.md) |
-| re-run something | [docs/03_REPRODUCING.md](docs/03_REPRODUCING.md) |
-| understand conditioning vs steering vs partial diffusion | [docs/04_GENERATION_METHODS.md](docs/04_GENERATION_METHODS.md) |
-| understand the scores and the final ranking weights | [docs/05_SCORING_AND_RANKING.md](docs/05_SCORING_AND_RANKING.md) |
-| see the funnel (how many designs survived each stage) | [docs/06_RESULTS_AND_FUNNELS.md](docs/06_RESULTS_AND_FUNNELS.md) |
-| avoid our mistakes | [docs/07_LESSONS_AND_PITFALLS.md](docs/07_LESSONS_AND_PITFALLS.md) |
+| understand what we did and why | [docs/00](docs/00_PROJECT_OVERVIEW.md), [docs/01](docs/01_PIPELINE_MAP.md) |
+| re-run a stage | [docs/03](docs/03_REPRODUCING.md) |
+| compare conditioning, steering and partial diffusion | [docs/04](docs/04_GENERATION_METHODS.md) |
+| see how candidates were scored and ranked | [docs/05](docs/05_SCORING_AND_RANKING.md) |
+| see the funnels and the submitted list | [docs/06](docs/06_RESULTS_AND_FUNNELS.md) |
+| avoid our mistakes | [docs/07](docs/07_LESSONS_AND_PITFALLS.md) |
 
-## Third-party tools and licences
+## Limitations
 
-RFD4-Proteina (NVIDIA), LigandMPNN, Boltz-2, ipSAE, PLACER, tmol, BioEmu, MMseqs2, Foldseek, US-align and PyRosetta are
-used as installed on the cluster and are **not** redistributed here. PyRosetta is free for non-commercial academic use under
-the RosettaCommons licence — check your use qualifies. Check each tool's licence before reusing outputs commercially.
+The ranking rests on an in-silico stand-in for the hosts' score, whose formulas are not public, and on a literature factor from 19 enzymes that did not survive a selection-aware permutation test.
+Boltz-2 ipTM is saturated for these designs, PLACER fractions are uncalibrated, and the steering rewards overlap with the pass criteria.
+
+## Third-party tools
+
+RFD4-Proteina, LigandMPNN, Boltz-2, ipSAE, PLACER, tmol, BioEmu, MMseqs2, Foldseek, US-align and PyRosetta are used as installed and are not redistributed. PyRosetta is free for non-commercial
+academic use under the RosettaCommons licence. Check each tool's licence before reusing its outputs commercially.

@@ -1,7 +1,7 @@
-# RFD4 steering pipeline – agent-to-agent handoff (written 2026-11-21 ~21:10)
+# RFD4 steering, rounds 4 and 5: notes on the code in this folder (2026-11-21, 21:10)
 
-Audience: another Claude Code session continuing this work. The user is a computational biologist on bwForCluster Helix
-(account `<SLURM_ACCOUNT>`). All original paths are under `~/HACKATHON_ETH` (this tarball mirrors that layout minus the big binaries).
+These notes describe the steering code as it stood at the end of round 4/5. It was superseded by `pipelines/02_rfd4_steering`, which ran the
+large campaign. Original paths are under `~/HACKATHON_ETH` on the Helix cluster.
 
 ## 1. Goal
 Scaffold a Kemp-eliminase active site (catalytic carboxylate base + oxyanion partner + TS-analogue ligand 6NT) into a 150-260 aa

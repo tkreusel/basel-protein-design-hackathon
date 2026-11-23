@@ -1,15 +1,13 @@
-# Tool notes (plan §0.1, §9)
+# Tool notes
 
-Real, observed interfaces only. Plan §0.1: do not invent CLI flags — clone, read
-`--help`, run the bundled example, record what actually happened. A tool that
+Observed interfaces only: we did not guess CLI flags; we cloned the tool, read
+`--help`, ran the bundled example and recorded what happened. A tool that
 will not run gets its failure recorded and its fallback chosen, not a retry loop.
 
-Status legend: ✅ verified working here · ⚠️ works with caveats · ❌ blocked ·
-⬜ not yet attempted
 
 ---
 
-## RFD4-Proteina — ⚠️ installed, GPU blocked, fix identified
+## RFD4-Proteina — installed, GPU blocked, fix identified
 
 - **Location:** `/mnt/work/repos/RFD4-Proteina`, git `6306a21`, version `0.0.3`.
 - **Entry points:** `rfd4-generate`, `rfd4-evaluate`, `rfd4-train`,
@@ -18,10 +16,9 @@ Status legend: ✅ verified working here · ⚠️ works with caveats · ❌ blo
   `$HOME/.cache/huggingface` by the original clone. `configs/inference.yaml`
   selects the release checkpoint pair from the Hub, so a default run needs no
   checkpoint override.
-- **Repo ships its own agent instructions** at `AGENTS.md` and five skills under
-  `skills/`. Follow them; they are more current than this file.
+- The repository ships its own contributor notes (`AGENTS.md`) and task recipes under `skills/`; they are more current than this file.
 
-### ❌ Blocker: CUDA 13 torch vs CUDA 12.4 driver
+### Blocker: CUDA 13 torch vs CUDA 12.4 driver
 
 `bash skills/rfd4-proteina-setup/scripts/preflight.sh` →
 `FAIL: CUDA is unavailable in the selected environment.`
@@ -92,7 +89,7 @@ Caveats to check when applying it:
     a bond left `AROMATIC` is silently cast to `SINGLE` and the ring's bond-order
     information is lost. Formal charges are read as written — "unknown" is not
     neutral. Directly relevant to `6NT.sdf` and `ts.sdf` (plan §5.1).
-### ✅ The theozyme conditioning recipe — WORKING (got it wrong twice first)
+### The theozyme conditioning recipe — WORKING (got it wrong twice first)
 
 **This is the recipe that works.** Verified: a de novo 185-residue scaffold
 reproducing the HG3.17 site at base 2.57 Å / donor 3.23 Å / wall 5.43 Å
@@ -134,7 +131,7 @@ What we learned the hard way:
 | `C_SEQ` + `C_CRDGRP: 1`, no `C_CRD` | **validates, runs, silently wrong.** 0/10 designs kept the site; base→N3 8.1–23.0 Å against a 2.5 Å target. Group recorded, no geometric target existed. |
 | `C_CRD: true` + `C_CRDGRP: 1` | rejected at prevalidation: *"Coordinate group 0 must match absolute coordinate conditioning; modify C_CRD first."* `C_CRD: true` reserves group **0**, conflicting with group 1. |
 | `C_CRD: false` + `C_CRDGRP: 1` | validates, **still wrong** (base 13.1 Å). `C_CRD: false` really does mean *no* coordinate conditioning. |
-| **`C_CRD: true`, no `C_CRDGRP`** | ✅ **works** — base 2.57, donor 3.23, wall 5.43 Å |
+| **`C_CRD: true`, no `C_CRDGRP`** | **works** — base 2.57, donor 3.23, wall 5.43 Å |
 
 For reference, the canonical `motif_unindexed` benchmark input carries **no**
 coordinate-condition column at all: just real coordinates,
@@ -144,7 +141,7 @@ so a shared index group (which preserves relative residue offsets) suits it; a
 discontiguous theozyme wants separate groups so each catalytic residue's
 sequence position is independent.
 
-⚠️ Note our `C_IDX: false` with separate group labels still came back as
+Note our `C_IDX: false` with separate group labels still came back as
 `condition_index_1_residue = True` in the output (while
 `is_unindexed_insertion = True`). The geometry is right regardless, but the
 unindexing may not be doing what we intend. Worth revisiting if fold diversity
@@ -170,7 +167,7 @@ Other interface facts confirmed while debugging:
 - Our `C_IDX: false` came back as `condition_index_1_residue = True` in the
   output while `is_unindexed_insertion = True`. The two are not the same flag;
   unindexing did happen. Not yet fully understood — low priority.
-- ⚠️ **All `*_refolding` metric tags need an AF3 apptainer/docker container.** No
+- **All `*_refolding` metric tags need an AF3 apptainer/docker container.** No
   container runtime exists here (see CLUSTER.md), so `ame_refolding` and
   `motif_scaffold_refolding` are **unavailable**. Motif RMSD must be computed
   ourselves in `geometry.py`. Plain generation needs no container.
@@ -182,7 +179,7 @@ Other interface facts confirmed while debugging:
 
 ---
 
-## RFD3 — ✅ verified by the organisers, our fallback for stage 1
+## RFD3 — verified by the organisers, our fallback for stage 1
 
 - Run via `$ENV_ROOT/env-rfd3/bin/rfd3`, Hydra-style `key=value`.
 - Known-good Kemp invocation is in `/mnt/work/kemp_example/src/kemp-e2e.sbatch`.
@@ -195,11 +192,11 @@ Other interface facts confirmed while debugging:
   `unindex` (comma-separated chain+resnum), `select_fixed_atoms` (per-residue atom
   name lists, or `ALL` for the ligand).
 - Select design keys with `'json_keys_subset=[Kemp_HG3_17_base_donor]'`.
-- ⬜ **Open:** whether RFD3 exposes the RASA conditioning plan §5.2/§6.2 needs for
+- **Open:** whether RFD3 exposes the RASA conditioning plan §5.2/§6.2 needs for
   the burial sweep. `logs/rfd3-help.txt` in the example workspace is the place to
   look.
 
-## LigandMPNN — ✅ provided, known-good invocation
+## LigandMPNN — provided, known-good invocation
 
 - `$ENV_ROOT/env-ligandmpnn/bin/python $LIGANDMPNN_ROOT/run.py`, conventional
   `--flag value`.
@@ -208,24 +205,24 @@ Other interface facts confirmed while debugging:
   `ChainResnum` list), `--ligand_mpnn_use_atom_context 1`,
   `--ligand_mpnn_use_side_chain_context 1`, `--batch_size`,
   `--number_of_batches`, `--pack_side_chains`, `--seed`, `--verbose`.
-- Checkpoint `ligandmpnn_v_32_010_25.pt` = v32, 0.10 Å noise. ⬜ Check whether a
+- Checkpoint `ligandmpnn_v_32_010_25.pt` = v32, 0.10 Å noise. Check whether a
   soluble-weighted variant is present (plan §6.3).
-- ⬜ Note for plan §6.3: `--pack_side_chains 1` is needed if stage 3/4 want packed
+- Note for plan §6.3: `--pack_side_chains 1` is needed if stage 3/4 want packed
   rotamers; the example uses `0`.
 
-## MMseqs2 — ✅ provided, GPU-accelerated
+## MMseqs2 — provided, GPU-accelerated
 
 - `$MMSEQS` v18-8cc5c. Target DB `$MMSEQS_DB` (= `targetDB_gpu`), with
   `$MMSEQS_DB.idx` used as the search target.
 - Verified pipeline: `createdb --dbtype 1 --shuffle 0` → `search --db-load-mode 2
   --gpu 1 --max-seqs 300 -e 0.001` → `result2msa --msa-format-mode 5` →
   `unpackdb --unpack-name-mode 0 --unpack-suffix .a3m`.
-- ⚠️ Needs ~28 GB RAM → **must run on `gpu-dy-l4-1`** (the g6.2xlarge).
+- Needs ~28 GB RAM → **must run on `gpu-dy-l4-1`** (the g6.2xlarge).
 - Serves double duty: MSAs for Boltz-2 (stage 5) *and* the identity check in the
-  compliance gate (stage 6). ⬜ Confirm what `targetDB_gpu` actually contains —
+  compliance gate (stage 6). Confirm what `targetDB_gpu` actually contains —
   stage 6 needs UniProt + PDB seqres coverage to be meaningful.
 
-## Boltz-2 — ✅ provided, known-good invocation
+## Boltz-2 — provided, known-good invocation
 
 - `$ENV_ROOT/env-boltz2/bin/boltz predict <yaml> --model boltz2 --cache <dir>
   --out_dir <dir> --accelerator gpu --devices 1 --no_kernels --sampling_steps 200
@@ -234,16 +231,16 @@ Other interface facts confirmed while debugging:
 - The cache dir must contain symlinks to `boltz2_conf.ckpt`, `boltz2_aff.ckpt`,
   `mols.tar` and `mols/` from `$BOLTZ_ASSETS`.
 - `--no_kernels` is used by the verified example; keep it.
-- ⬜ Open (plan §9.4, §9.5): whether an arbitrary SDF is accepted or a CCD code is
+- Open (plan §9.4, §9.5): whether an arbitrary SDF is accepted or a CCD code is
   required, and the real wall-clock of one prediction on an L4.
 
-## tmol — ⬜ not attempted (next, timeboxed 2 h)
+## tmol — not attempted (next, timeboxed 2 h)
 
 On PyPI (HTTP 200 from both node classes). Plan §6.4 ranking metric
 `tmol.ddE_ts_sub` depends on it. Fallback if ligand parameterisation fails:
 geometry-only gate, drop ΔΔE (plan §7).
 
-## PLACER · BioEmu-2 · Foldseek · TM-align — ⬜ not attempted
+## PLACER · BioEmu-2 · Foldseek · TM-align — not attempted
 
 PLACER and BioEmu-2 are v1/v2 scope. Foldseek + TM-align/US-align are needed by
 the stage 6 compliance gate and are **not installed** — they must be built before
@@ -255,11 +252,11 @@ Milestone 3.
 
 | # | Question | Answer |
 | --- | --- | --- |
-| 1 | RFD4/RFD3 RASA conditioning: per-atom? what range? | ⬜ open |
-| 2 | Does PLACER batch on the GPU? | ⬜ open (v1) |
-| 3 | Can tmol parameterise the TS template? | ⬜ open |
-| 4 | Boltz-2: arbitrary SDF or CCD code only? | ⬜ open |
-| 5 | Boltz-2 wall-clock on this GPU? | ⬜ open |
-| 6 | Is `6NT` inside the Boltz-2/AF3 training window? | ⬜ open — if yes the substrate control arm in stage 5 is load-bearing |
-| — | Compute-node internet? | ✅ **yes**, pypi + RCSB both 200 |
-| — | Container runtime for AF3 refolding metrics? | ❌ **none** — RFD4 refolding tags unusable |
+| 1 | RFD4/RFD3 RASA conditioning: per-atom? what range? | open |
+| 2 | Does PLACER batch on the GPU? | open (v1) |
+| 3 | Can tmol parameterise the TS template? | open |
+| 4 | Boltz-2: arbitrary SDF or CCD code only? | open |
+| 5 | Boltz-2 wall-clock on this GPU? | open |
+| 6 | Is `6NT` inside the Boltz-2/AF3 training window? | open — if yes the substrate control arm in stage 5 is load-bearing |
+| — | Compute-node internet? | **yes**, pypi + RCSB both 200 |
+| — | Container runtime for AF3 refolding metrics? | **none** — RFD4 refolding tags unusable |

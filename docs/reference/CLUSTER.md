@@ -22,7 +22,7 @@ delay of a minute or two on the first submission):
 `l4-1` *or* both `l4small` nodes, not both at once. This is shared across
 teammates, so check `squeue` before submitting.
 
-### ⚠️ The budget is an AWS vCPU quota, and Slurm does not know about it
+### The budget is an AWS vCPU quota, and Slurm does not know about it
 
 This is not a soft guideline. It is enforced by EC2, and the failure is
 confusing:
@@ -75,10 +75,10 @@ build does not (it needs driver ≥ 580).
 
 | Environment | torch | CUDA build | GPU visible? |
 | --- | --- | --- | --- |
-| `env-rfd3` (provided) | 2.7.1 | 12.6 | ✅ yes |
-| `env-ligandmpnn` (provided) | 2.7.1 | 12.6 | ✅ yes |
-| `env-boltz2` (provided) | 2.7.1 | 12.6 | ✅ yes |
-| `repos/RFD4-Proteina/.venv` as cloned | 2.14.1 | **13.2** | ❌ **no** |
+| `env-rfd3` (provided) | 2.7.1 | 12.6 | yes |
+| `env-ligandmpnn` (provided) | 2.7.1 | 12.6 | yes |
+| `env-boltz2` (provided) | 2.7.1 | 12.6 | yes |
+| `repos/RFD4-Proteina/.venv` as cloned | 2.14.1 | **13.2** | **no** |
 
 RFD4-Proteina as installed is CPU-only on this cluster. See
 [TOOL_NOTES.md](TOOL_NOTES.md) for the fix and its status.

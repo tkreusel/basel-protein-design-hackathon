@@ -11,7 +11,7 @@
 #
 # C_RAS is RFD4's RASA conditioning: a BINNED per-atom enum
 # (BURIED / INTERMEDIATE / EXPOSED / UNSPECIFIED), not the continuous
-# {0.0, 0.1, 0.2, 0.3} sweep KEMP_PIPELINE_PLAN.md section 5.2 assumed.
+# {0.0, 0.1, 0.2, 0.3} sweep the original pipeline plan, section 5.2 assumed.
 # Training definition: binned Shrake-Rupley surface area at fixed edges.
 #
 # Hypothesis under test: asking for a buried ligand raises the pocket hit rate

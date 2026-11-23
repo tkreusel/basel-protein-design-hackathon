@@ -271,8 +271,8 @@ def wall_metrics(rep, site) -> dict:
     ly = lig_xyz(rep)
     P = Atoms.of(rep.protein)
     pts = np.array([P.xyz(w["resid"], a) for a in w["ring"] if P.xyz(w["resid"], a) is not None])
-    bz = np.array([ly[n] for n in roles["benzo"]])
-    if pts.ndim != 2 or len(pts) < 3 or bz.ndim != 2 or len(bz) < 3:   # ring atoms missing (e.g. PLACER pocket crop) -> no plane
+    bz = np.array([ly[n] for n in roles["benzo"] if n in ly])
+    if len(pts) < 3 or len(bz) < 3:          # wall ring / benzo atoms missing in this (e.g. PLACER) model: skip instead of crashing
         return {"geo.wall_found": 0.0}
     n1, n2 = plane_normal(pts), plane_normal(bz)
     ang = float(np.degrees(np.arccos(abs(np.clip(n1 @ n2, -1, 1)))))

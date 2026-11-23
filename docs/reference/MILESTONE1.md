@@ -30,7 +30,7 @@ All distances in Å, from `src/geometry.py` reading roles from
 | 6SS1 | HG3.17 Q50A/E47N/N300D | 2.61 | **99.00** (no tip) | 5.05 | 2.61 | 0.400 | — |
 | 6SS3 | HG3.17 Q50K/E47N/N300D | 2.52 | **7.37** | 3.83 | 2.52 | 0.400 | — |
 
-## Criterion 1 — Spearman ρ vs log₁₀(kcat/KM) — ❌ FAIL
+## Criterion 1 — Spearman ρ vs log₁₀(kcat/KM) — FAIL
 
 | Metric | ρ | p | vs 0.7 |
 |---|---|---|---|
@@ -89,16 +89,16 @@ composite therefore scores it as a *window-satisfaction* term (1.0 anywhere in
 donor's 0.60. `tests/test_geometry.py::test_base_metric_does_not_track_activity`
 pins this so a later "improvement" cannot silently reintroduce it.
 
-## Criterion 2 — ablation separation — ✅ PASS
+## Criterion 2 — ablation separation — PASS
 
 All four required comparisons pass, with wide margins:
 
 | Comparison | Result |
 |---|---|
-| HG3.17 donor 3.10 < 6SS1 (Q50A) 99.00 | ✅ PASS |
-| HG3.17 donor 3.10 < 6SS3 (Q50K) 7.37 | ✅ PASS |
-| HG3.17 composite 0.937 > 6SS1 0.400 | ✅ PASS |
-| HG3.17 composite 0.937 > 6SS3 0.400 | ✅ PASS |
+| HG3.17 donor 3.10 < 6SS1 (Q50A) 99.00 | PASS |
+| HG3.17 donor 3.10 < 6SS3 (Q50K) 7.37 | PASS |
+| HG3.17 composite 0.937 > 6SS1 0.400 | PASS |
+| HG3.17 composite 0.937 > 6SS3 0.400 | PASS |
 
 The donor–oxyanion metric separates the two classes cleanly and with no
 overlap: **active 2.96–3.10 Å vs ablated 6.05–99.0 Å**, a gap of >2.9 Å. Any
@@ -116,7 +116,7 @@ give criterion 2's required separation, so these are a lower priority, but
 `D127A` remains worth building because it is the only negative that tests the
 *base* metric.
 
-## Criterion 3 — known-geometry recovery — ✅ PASS
+## Criterion 3 — known-geometry recovery — PASS
 
 20/20 tests pass (`tests/test_geometry.py`). `src/derive_atom_map.py` and
 `src/kemp/geometry.py` select atoms and compute distances through independent
@@ -180,9 +180,9 @@ Do not pick a 5-design submission set on this composite alone.
 
 | Criterion | Target | Result | |
 |---|---|---|---|
-| 1. Spearman ρ vs log₁₀(kcat/KM) | ≥ 0.70 | **+0.50** (n=3, one inversion) | ❌ |
-| 2. Ablation separation | HG3.17 > ablations | 4/4, margin >2.9 Å | ✅ |
-| 3. Known-geometry recovery | match deposited coords | 20/20 tests, <0.015 Å | ✅ |
+| 1. Spearman ρ vs log₁₀(kcat/KM) | ≥ 0.70 | **+0.50** (n=3, one inversion) | |
+| 2. Ablation separation | HG3.17 > ablations | 4/4, margin >2.9 Å | |
+| 3. Known-geometry recovery | match deposited coords | 20/20 tests, <0.015 Å | |
 
 Open, in priority order:
 1. Add HG3.3b + HG3.14 via Boltz-2 to make criterion 1 testable at n = 5.

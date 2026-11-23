@@ -1,0 +1,24 @@
+# Motif definitions shared by generation, sequence design, refold gate and the final geometry checks.
+# Residue numbers and tip atoms refer to inputs/HG3_17_kemp_motif.pdb (HG3.17, PDB 4BS0 pose, ligand 6NT).
+reference_pdb: inputs/HG3_17_kemp_motif.pdb
+
+motifs:
+  hgnt:                       # catalytic Asp127 + Gln50
+    spec: kemp4_hg317-tips_no-trp.yaml
+    residues: [ASP, GLN]
+    extra_polar_near_base: 0  # side-chain polar atoms within 4.5 A of the base O tolerated by the gate
+  hgwt:                       # + Trp44 aromatic wall; its NE1 is the one tolerated polar atom
+    spec: kemp4_hg317-tips_with-trp.yaml
+    residues: [ASP, GLN, TRP]
+    extra_polar_near_base: 1
+
+residues:
+  ASP: {resnum: 127, tips: [CB, CG, OD1, OD2], role: catalytic base}
+  GLN: {resnum: 50,  tips: [CG, CD, OE1, NE2], role: oxyanion donor}
+  TRP: {resnum: 44,  tips: [CG, CD1, CD2, NE1, CE2, CE3, CZ2, CZ3, CH2], role: aromatic wall}
+
+# 6NT atoms used to superpose designs / predictions onto the theozyme
+ligand_atoms: [O21, NO1, O11, C5, C6, C7, C7A, N1, C3A, C4, N3, N2]
+# base carboxylate oxygens and the donor atom that must reach the leaving-group nitrogen N1
+base_oxygens: [OD1, OD2]
+donor_atom: NE2

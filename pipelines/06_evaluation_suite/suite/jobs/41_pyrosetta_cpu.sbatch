@@ -8,7 +8,7 @@
 #SBATCH --time=06:00:00
 # 4 PyRosetta processes walking the entry list from the END (lock files avoid collisions). CPU-only: no --gres, no GPU reserved.
 set -o pipefail
-cd /mnt/work/projects/Maxi/pipeline && source env.sh
+cd "${PIPE_ROOT:?set PIPE_ROOT to the suite directory}" && source env.sh
 ENTS=$($PY_TMOL -m maxi_eval.shard_entries -k 1 2>/dev/null)
 for i in 1 2 3 4; do
   sleep $((i*6))

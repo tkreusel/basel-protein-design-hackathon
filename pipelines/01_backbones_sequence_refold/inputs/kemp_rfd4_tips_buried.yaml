@@ -5,7 +5,7 @@
 # residues. The model then infers the rest of each side chain and the backbone
 # placement itself.
 #
-# Rationale -- KEMP_PIPELINE_PLAN.md section 6.2:
+# Rationale -- the original pipeline plan, section 6.2:
 #   "Use atomised, unindexed motif conditioning: supply only the
 #    functional-group atoms (carboxylate OD1/OD2, donor heavy atom, aromatic
 #    ring atoms), not full residues with fixed sequence positions.

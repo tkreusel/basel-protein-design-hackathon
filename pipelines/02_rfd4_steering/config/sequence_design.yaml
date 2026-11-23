@@ -1,0 +1,13 @@
+# LigandMPNN settings (src/kemp/mpnn.py). Motif residues are fixed in every variant.
+checkpoint: ligandmpnn_v_32_010_25.pt
+temperature: 0.1
+n_sequences: 4              # full redesigns per backbone (mpnn1..mpnn4)
+seed_full: 111
+seed_shell: 222
+# full redesign: these amino acids are forbidden at non-motif residues within base_shell_A of the base carboxylate oxygens,
+# which keeps polar and charged side chains out of the base environment
+omit_aa: KRHDENQSTYC
+base_shell_A: 6.0
+# steered arms only: one extra sequence with motif + catalytic shell fixed at the RFD4 sequence
+# (residues with any heavy atom within ligand_shell_A of the ligand or within base_shell_A of the base O)
+shell_variant: {ligand_shell_A: 5.0, seed: 222, n_sequences: 1}

@@ -4,7 +4,7 @@
 # (columns: name,entry,arm) if your names differ.
 reference_dir: /mnt/work/projects/Maxi
 entries:
-  7K4Q: {kind: crystal, file: 7k4q.cif, variant: "HG3",                          kcat_KM: 146,  activity_source: "KEMP_PIPELINE_PLAN.md (Broom 2020)"}
+  7K4Q: {kind: crystal, file: 7k4q.cif, variant: "HG3",                          kcat_KM: 146,  activity_source: "the original pipeline plan (Broom 2020)"}
   5RGA: {kind: crystal, file: 5RGA.cif, variant: "HG3 (277 K)",                  kcat_KM: 146,  activity_source: "same enzyme as 7K4Q; different temperature"}
   8RD5: {kind: crystal, file: 8RD5.cif, variant: "HG3.R5",                       kcat_KM: null, activity_source: "TODO"}
   4BS0: {kind: crystal, file: 4bs0.cif, variant: "HG3.17 E47N,N300D",            kcat_KM: null, activity_source: "TODO (HG3.17 background 126000 in plan; this variant differs)"}
@@ -12,8 +12,8 @@ entries:
 # OPTIONAL validation ladder from the sibling project (/mnt/work/projects/tobi_v1/benchmark/pdb). The five Maxi structures
 # carry almost no activity spread (only HG3 = 146 is known), so rank-correlation needs these. Set enabled: true to include.
 extra_entries:
-  7K4X: {enabled: true, kind: crystal, dir: /mnt/work/projects/tobi_v1/benchmark/pdb, file: 7K4X.cif, variant: "HG3.7",  kcat_KM: 27000,  activity_source: "KEMP_PIPELINE_PLAN.md (Broom 2020)"}
-  7K4Z: {enabled: true, kind: crystal, dir: /mnt/work/projects/tobi_v1/benchmark/pdb, file: 7K4Z.cif, variant: "HG3.17", kcat_KM: 126000, activity_source: "KEMP_PIPELINE_PLAN.md (Broom 2020)"}
+  7K4X: {enabled: true, kind: crystal, dir: /mnt/work/projects/tobi_v1/benchmark/pdb, file: 7K4X.cif, variant: "HG3.7",  kcat_KM: 27000,  activity_source: "the original pipeline plan (Broom 2020)"}
+  7K4Z: {enabled: true, kind: crystal, dir: /mnt/work/projects/tobi_v1/benchmark/pdb, file: 7K4Z.cif, variant: "HG3.17", kcat_KM: 126000, activity_source: "the original pipeline plan (Broom 2020)"}
   6SS1: {enabled: false, kind: crystal, dir: /mnt/work/projects/tobi_v1/benchmark/pdb, file: 6SS1.cif, variant: "HG3.17 Q50A (oxyanion donor ablated)", kcat_KM: null, activity_source: "TODO"}
 # Boltz refolds: any depth under root. Each model's ARM is read from the ligand actually in the CIF (6NT=tsa, H5J=sub, 6VP=prod);
 # the ENTRY comes from the file name: `<entry>__<arm|CCD>`, `<entry>_<arm|CCD>` or just `<entry>` (case-insensitive match to the
