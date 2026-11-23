@@ -1,6 +1,14 @@
+# Team Substrate|Ventures
+
+Benedict Wolf \
+Friederike Reinhardt \
+Maximilian Vassen \
+Paul Brunner \
+Tobias Kreusel
+
 # Kemp eliminase de novo design — pipelines, configs and docs
 
-Everything we built for the Kemp-eliminase design hackathon (Nov 2026): backbone generation with
+Everything we built for the Protein Design Hackathon in Basel at D-BSSE (ETHZ) (Nov 2026): backbone generation with
 **RFD4-Proteina** (conditioning-only and reward-steered), sequence design with **LigandMPNN**, refolding with **Boltz-2**,
 a physics/ensemble evaluation suite (**ipSAE2, PLACER, tmol, PyRosetta**), a stand-in for the hosts' scoring, an eligibility
 gate (sequence identity / TM-score against published structures), BioEmu ensembles, a literature calibration, and the
