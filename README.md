@@ -66,11 +66,6 @@ PYTHONPATH=src python -m pytest tests -q        # checks the gates, seeds and ra
 | see the funnels and the submitted list | [docs/06](docs/06_RESULTS_AND_FUNNELS.md) |
 | avoid our mistakes | [docs/07](docs/07_LESSONS_AND_PITFALLS.md) |
 
-## Limitations
-
-The ranking rests on an in-silico stand-in for the hosts' score, whose formulas are not public, and on a literature factor from 19 enzymes that did not survive a selection-aware permutation test.
-Boltz-2 ipTM is saturated for these designs, PLACER fractions are uncalibrated, and the steering rewards overlap with the pass criteria.
-
 ## Third-party tools
 
 RFD4-Proteina, LigandMPNN, Boltz-2, ipSAE, PLACER, tmol, BioEmu, MMseqs2, Foldseek, US-align and PyRosetta are used as installed and are not redistributed. PyRosetta is free for non-commercial
