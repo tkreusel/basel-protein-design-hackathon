@@ -1,0 +1,40 @@
+# @package metrics
+inline_metrics:
+  kemp_pocket:
+    _target_: rfproteina.metrics.custom_metrics.kemp_pocket.KempPocketMetric
+    target_ratio: 1.0
+  tmol_lig_ddg:                      # protein<->6NT interaction energy (TMol REF2015-like, lower = more favourable)
+    _target_: rfproteina.metrics.custom_metrics.kemp_tmol.KempTMolMetric
+    region_a: is_ligand
+    region_b: is_protein
+    relax: none
+    ligand_params_files: ["${oc.env:PROJECT_ROOT}/../inputs/6NT.tmol"]
+  kemp_chem:                         # theozyme GDM_KE_1483 (Glu base, Ser partner) chemistry descriptors
+    _target_: rfproteina.metrics.custom_metrics.kemp_chem.KempChemMetric
+    ref_pdb: ${oc.env:PROJECT_ROOT}/../inputs/kemp_theozyme_GDM_KE_1483.pdb
+  kemp_pocket2:                      # crystal-calibrated pocket: ratio 0.6 +- 0.15 (29SB 0.42, 8RD5 0.59, HG3 0.61; HG4 1.20, HG3.17 1.35)
+    _target_: rfproteina.metrics.custom_metrics.kemp_pocket.KempPocketMetric
+    target_ratio: 0.6
+    tol: 0.15
+  kemp_base:                         # base environment, nitro H-bonds, clashes (generic: base = acid closest to the ligand ring N)
+    _target_: rfproteina.metrics.custom_metrics.kemp_base.KempBaseMetric
+  kemp_pocket3:                      # smaller pocket: ratio 0.5 +- 0.10 (between 29SB 0.42 and HG3/8RD5 ~0.6)
+    _target_: rfproteina.metrics.custom_metrics.kemp_pocket.KempPocketMetric
+    target_ratio: 0.5
+    tol: 0.10
+  kemp_chem_hg:                      # HG3.17 motif rigidity: Asp127 base (CB,CG,OD1,OD2) + Gln50 oxyanion (CG,CD,OE1,NE2), ligand-superposed RMSD
+    _target_: rfproteina.metrics.custom_metrics.kemp_chem.KempChemMetric
+    ref_pdb: ${oc.env:PROJECT_ROOT}/../inputs/HG3_17_kemp_motif.pdb
+    base_res: ASP
+    base_match: [CB, CG, OD1, OD2]
+    base_o: [OD1, OD2]
+    hb_res: GLN
+    hb_match: [CG, CD, OE1, NE2]
+    hb_atom: NE2
+  kemp_channel:                      # water/substrate access: bottleneck probe radius of the best ligand->bulk path; band 1.4-1.9 A
+    _target_: rfproteina.metrics.custom_metrics.kemp_channel.KempChannelMetric
+  kemp_channel18:                    # campaign 20261121: bottleneck radius target 1.8 A (band 1.7-1.9), finer probe-radius ladder around the target
+    _target_: rfproteina.metrics.custom_metrics.kemp_channel.KempChannelMetric
+    lo: 1.7
+    hi: 1.9
+    radii: [0.5, 0.7, 0.9, 1.1, 1.25, 1.4, 1.5, 1.6, 1.7, 1.75, 1.8, 1.85, 1.9, 2.0, 2.1, 2.3]

@@ -121,7 +121,10 @@ def interface(pose, sfxn):
     d = {k: f(v) for k, v in {"dG_sep": D.dG, "dSASA": D.dSASA,
          "packstat_int": D.packstat, "delta_unsat_hb": D.delta_unsat_hbonds, "n_hb": D.interface_hbonds,
          "hbond_E": D.total_hb_E, "n_int_res": D.interface_nres}.items()}
-    d["sc"] = sc_ligand(pose, pose.total_residue())
+    try:
+        d["sc"] = sc_ligand(pose, pose.total_residue())       # Sc is known to be unreliable: its failure must not discard dG_sep / packstat / hbonds
+    except Exception:
+        d["sc"] = float("nan")
     return d
 
 

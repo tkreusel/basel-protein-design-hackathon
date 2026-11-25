@@ -14,3 +14,6 @@ env/kemp-orch/
 *.tar
 *.tar.gz
 slurm-*.out
+# campaign pipeline: local site configuration and the RFD4 clone created by jobs/install_rfd4.sh
+pipelines/02_rfd4_steering/config/site.env
+pipelines/02_rfd4_steering/rfd4/

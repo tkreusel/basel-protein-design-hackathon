@@ -20,8 +20,8 @@ def main():
     ap.add_argument("--entries", default=None)
     ap.add_argument("--max-replicates", type=int, default=None)
     ap.add_argument("--modes", default="holo,apo")
-    ap.add_argument("--arms", default=None, help="arms to run, separated by + or , (tsa,sub,prod,apo); default all. NOTE: with sbatch --export use + (a comma splits the export list)")
-    ap.add_argument("--placer-root", default=os.environ.get("PLACER_ROOT", "/mnt/work/repos/placer"))
+    ap.add_argument("--arms", default=None, help="comma list of arms to run (tsa,sub,prod,apo); default all")
+    ap.add_argument("--placer-root", default=os.environ.get("PLACER_ROOT"))
     ap.add_argument("--threads", type=int, default=None)
     a = ap.parse_args()
     sys.path.insert(0, a.placer_root)
@@ -40,7 +40,7 @@ def main():
         # per entry from the TSA replicate (apo needs the catalytic base, taken from that replicate's detected site)
         reps = list(e["replicates"])
         if a.arms:
-            reps = [r for r in reps if r["arm"] in a.arms.replace("+", ",").split(",")]
+            reps = [r for r in reps if r["arm"] in a.arms.split(",")]
         if a.max_replicates:
             seen: dict = {}
             keep = []

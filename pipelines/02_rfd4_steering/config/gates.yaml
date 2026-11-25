@@ -1,0 +1,49 @@
+# Gate thresholds. Read by src/kemp/filter_pre.py (design gate), boltz_gate.py (refold gate) and the extended-evaluation selector.
+
+design_gate:
+  # sequence-independent; failing any of these is a backbone problem
+  geometry:
+    ligand_sasa_frac_max: 0.10
+    base_sasa_rel_max: 0.10
+    volume_ratio: [0.4, 1.4]
+    lig_clash_atoms_max: 0
+    pp_clash_frac_max: 0.005
+    motif_rmsd_max: 0.3             # base and partner, A
+  # evaluated on the RFD4-native sequence; LigandMPNN can repair these
+  sequence:
+    base_cation_6_max: 0
+    nitro_hb_far_min: 1
+    nitro_hb_near_base_max: 0
+    tmol_ddg_max: 0.0               # strictly below
+  # which flag decides, by arm family: geom = geometry only, core = geometry and sequence
+  decision: {steered: core, unsteered: geom}
+  min_keep_designs: 30              # per run; the best remaining designs fill up (gate_tier 2, then 3)
+  channel_open_min: 1.4             # bottleneck radius, A
+  channel_band: [1.7, 1.9]
+
+boltz_gate:
+  plddt_min: 80.0
+  ca_rmsd_max: 2.0
+  ligand_iptm_min: 0.6
+  ligand_rmsd_max: 2.0              # after CA superposition
+  motif_tip_rmsd_max: 1.0
+  min_keep_sequences: 10            # per run; fallback fills up (boltz_tier 2) from sequences that fold
+
+extended_set:                       # next-best sequences of a finished run that did not pass the strict gate
+  max_sequences: 20
+  max_per_design: 3
+  relaxed: {ligand_rmsd_max: 2.5, motif_tip_rmsd_max: 1.5}
+
+shortlist:                          # flags used for the shortlist folders (report only)
+  placer_apo_frac_min: 0.3
+  placer_holo_frac_min: 0.1
+  ipsae_tsa_min: 0.7
+  tsa_over_substrate_z_min: 2.0
+  ros_dg_sep_max: -15.0
+
+final_selection:
+  ipsae_tsa_min: 0.8
+  min_composite_metrics: 5
+  donor_bound_distance: 3.5         # Gln NE2 .. N1, A
+  donor_bound_fraction: 0.5         # of the Boltz TSA samples
+  top_n: 30

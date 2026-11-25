@@ -10,7 +10,7 @@
 # PLACER holo+apo ensembles. ~1-3 s/model on an L4 -> 50 models x 2 modes ~ 3-5 min per replicate.
 # Resumable (existing CSVs are skipped). Optional: ENTRIES=4BS0,7K4Q  NSAMPLES=100  MAXREP=3
 set -o pipefail
-cd /mnt/work/projects/Maxi/pipeline && source env.sh
+cd "${PIPE_ROOT:?set PIPE_ROOT to the suite directory}" && source env.sh
 export TMPDIR="/tmp/maxi-$SLURM_JOB_ID"; mkdir -p "$TMPDIR"; trap 'rm -rf "$TMPDIR"' EXIT
 nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
 $PY_PLACER -m maxi_eval.run_placer_paul --inputs work/inputs --out work/placer \

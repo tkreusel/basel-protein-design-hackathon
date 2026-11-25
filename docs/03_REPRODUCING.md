@@ -1,4 +1,4 @@
-# 03 — Reproducing the pipelines
+# 03 Reproducing the pipelines
 
 Prerequisites: a Slurm GPU cluster like ours, the environments in [02](02_ENVIRONMENTS_AND_CLUSTER.md), and the organisers' reference
 paths. Everything below was run this way; seeds, thresholds and tool flags are the ones we used. **Check `squeue` before every GPU
@@ -51,15 +51,20 @@ Stages GEN → SELECT (top-K by number of the 7 computable core criteria) → MP
 within 6 Å of the base carboxylate O; motif fixed; seed 111) → BOLTZ (no MSA, 6NT, 3 recycles, 1 sample, seed 0) → SCORE.
 Idempotent: resubmit with `KEMP_RUN=<run dir>` to resume. See `pipelines/04_overnight_unsteered_control/README.md`.
 
-### 2c. Reward-steered beam search (cluster-side campaign)
+### 2c. The campaign: steered and unsteered generation through to evaluation
+
 ```bash
-python code/make_r4.py ; python code/make_r5.py                  # experiment YAMLs for the arms
-sbatch -J <name> -o <log> --export=ALL,N_REP=3 code/run_r5_job.sbatch <campaign> <seed> <arm> [<arm>...]
-python code/eval_r5.py                                           # design gate + per-arm summary
+cd pipelines/02_rfd4_steering
+cp config/site.env.example config/site.env        # paths, interpreters, tools
+bash jobs/install_rfd4.sh                         # RFD4 at the pinned commit, patched, with the Kemp metrics and experiment configs
+export KEMP_PIPELINE=$PWD; source jobs/lib.sh
+sbatch jobs/smoke.sbatch                          # tiny end-to-end run
+bash jobs/submit.sh --motifs "hgnt hgwt" --batches "1 2 3" --sheet 1 --nodes 2 --submit
+bash jobs/status.sh; PYTHONPATH=src python -m kemp.export_results
 ```
-Arms: `unsteered | steer_base | steer_base_tmol | steer_base_channel` (round 4/5) and `steer_tmol | steer_tmol_ch18 | unsteered` (overnight campaign).
-Needs the RFD4 clone patched with `rfd4_patch/` (custom metrics into `rfd4/src/rfproteina/metrics/custom_metrics/`, `pyproject.diff`).
-Details, caveats and the reward list: [04_GENERATION_METHODS.md](04_GENERATION_METHODS.md) and `pipelines/02_rfd4_steering/README_AGENT_HANDOFF.md`.
+Arms, reward weights, gate thresholds and seeds are in `config/*.yaml`; the stages, the file layout of a run and the measured costs are described in
+[`pipelines/02_rfd4_steering/README.md`](../pipelines/02_rfd4_steering/README.md); the steering and the rewards in [04](04_GENERATION_METHODS.md).
+`PYTHONPATH=src python -m pytest tests` in that directory checks that the gates, seeds and rankings reproduce the campaign's own tables.
 
 ### 2d. Partial diffusion
 ```bash
@@ -135,7 +140,7 @@ the suite's literature table `kemp_eval_dataset_full.csv` and the campaign's `ev
 
 | Step | Seeded? |
 |---|---|
-| RFD4 generation | yes (`seed=`); steered runs use 7 (r4), 11, 12 (r5); our control 7 |
+| RFD4 generation | yes (`seed=`); campaign seeds are `1000*batch + 10*arm + motif` plus 100000 per chunk (`config/arms.yaml`); round 4/5 used 7, 11, 12; the control 7 |
 | LigandMPNN | seed 111 |
 | Boltz-2 | `--seed`; consistency uses seeds 0–4 as separate runs |
 | tmol / PyRosetta relax | stochastic, ≈ 5 REU noise between identical runs |

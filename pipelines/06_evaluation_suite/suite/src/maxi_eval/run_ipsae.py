@@ -98,7 +98,7 @@ def main():
     if not df.empty and (df.status == "ok").any():
         ok = df[df.status == "ok"]
         num = ok.select_dtypes("number").columns.drop("model", errors="ignore")
-        g = ok.groupby(["entry", "arm"])[list(num)].agg(["mean", "std", "count"])
+        g = ok.groupby(["entry", "arm"])[list(num)].agg(["mean", "std", "count", "min", "max"])
         g.columns = [f"{a}|{b}" for a, b in g.columns]
         g.reset_index().to_csv(out / "ipsae_by_entry_arm.csv", index=False)
     print(f"{len(rows)} Boltz models processed -> {out}")

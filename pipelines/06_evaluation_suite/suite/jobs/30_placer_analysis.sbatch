@@ -9,5 +9,5 @@
 #SBATCH --time=01:00:00
 # PLACER ensemble statistics + tmol field per model (top FIELD_MODELS by prmsd).
 set -o pipefail
-cd /mnt/work/projects/Maxi/pipeline && source env.sh
+cd "${PIPE_ROOT:?set PIPE_ROOT to the suite directory}" && source env.sh
 $PY_TMOL -m maxi_eval.analyze_placer --placer work/placer --out work/placer_summary.csv --field-models "${FIELD_MODELS:-20}"

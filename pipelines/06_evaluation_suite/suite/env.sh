@@ -1,22 +1,25 @@
 #!/usr/bin/env bash
-# Maxi Kemp-eliminase evaluation pipeline -- environment. Source before running anything.
-# Three environments, one per tool; stages shell out between them (never mix them).
-export MAXI_ROOT="/mnt/work/projects/Maxi"
-export PIPE_ROOT="$MAXI_ROOT/pipeline"
+# Evaluation suite environment. Source before running anything; PIPE_ROOT is the folder that contains this file.
+# One interpreter per tool (they cannot be merged). Override any of them by exporting it before sourcing,
+# e.g. from the campaign's config/site.env (pipelines/02_rfd4_steering).
+_HERE="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+export PIPE_ROOT="${PIPE_ROOT:-$_HERE}"
 export PYTHONPATH="$PIPE_ROOT/src${PYTHONPATH:+:$PYTHONPATH}"
 
-# tmol + analysis (python 3.12, tmol 0.2.0, torch cu126, biotite, rdkit, scipy, pandas). GPU for relax.
-export PY_TMOL="/mnt/work/repos/RFD4-Proteina/.venv-cu12/bin/python"
-# PLACER (python 3.10, torch 2.3.1 cu12, dgl 2.4.0). GPU.
-export PY_PLACER="/home/ec2-user/.conda/envs/placer_env/bin/python"
-export PLACER_ROOT="/mnt/work/repos/placer"
-# ipSAE2 (CPU only)
-export IPSAE_BIN="/home/ec2-user/.conda/envs/ipsae2/bin/ipsae"
+# tmol and analysis: python 3.12, tmol 0.2.0, torch cu126, biotite, rdkit, scipy, pandas. Also runs aggregate and validate; CPU or GPU.
+export PY_TMOL="${PY_TMOL:?set PY_TMOL (the RFD4 venv works)}"
+# PLACER: python 3.10, torch 2.3.1 cu12, DGL 2.4.0. GPU stage.
+export PY_PLACER="${PY_PLACER:?set PY_PLACER}"
+export PLACER_ROOT="${PLACER_ROOT:?set PLACER_ROOT}"
+# ipSAE2 command line tool (CPU)
+export IPSAE_BIN="${IPSAE_BIN:?set IPSAE_BIN}"
+# PyRosetta 2026.47 (CPU only; academic licence)
+export PY_ROSETTA="${PY_ROSETTA:?set PY_ROSETTA}"
 
-# caches off $HOME / (small, shared)
-export XDG_CACHE_HOME="$PIPE_ROOT/work/.cache"
+# caches inside the work folder, not $HOME
+export XDG_CACHE_HOME="${KEMP_WORK:-$PIPE_ROOT/work}/.cache"
+export CLUSTER=local
 export TORCH_EXTENSIONS_DIR="$XDG_CACHE_HOME/torch-extensions"
 export MPLCONFIGDIR="$XDG_CACHE_HOME/matplotlib"
 export PYTHONDONTWRITEBYTECODE=1
 mkdir -p "$XDG_CACHE_HOME" "$MPLCONFIGDIR"
-export PY_ROSETTA="/mnt/work/envs/pyrosetta/bin/python"   # PyRosetta 2026.47, CPU only

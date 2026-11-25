@@ -51,6 +51,7 @@ HEADLINE = [
     ("ipsae.sub", "ipSAE2 protein->substrate", "high"),
     ("ipsae.delta_tsa_sub", "ipSAE2 TSA - substrate", "positive"),
     ("site.pae_cat_to_lig.tsa", "Boltz PAE catalytic residues->ligand (A)", "low"),
+    ("boltz_ipde.tsa", "Boltz ipDE TSA, mean over samples (A)", "low"), ("boltz_ipde.sub", "Boltz ipDE substrate (A)", "low"), ("boltz_ipde.prod", "Boltz ipDE product (A)", "ref"),
 ]
 
 
@@ -113,7 +114,9 @@ def main():
         for arm in ("tsa", "sub", "prod"):
             s = d[d.arm == arm].set_index("entry")
             for col, name in (("ipsae.ipsae|mean", f"ipsae.{arm}"), ("ipsae.ipsae|std", f"ipsae.{arm}|sd"),
-                              ("site.pae_cat_to_lig|mean", f"site.pae_cat_to_lig.{arm}"), ("site.plddt_cat|mean", f"site.plddt_cat.{arm}")):
+                              ("site.pae_cat_to_lig|mean", f"site.pae_cat_to_lig.{arm}"), ("site.plddt_cat|mean", f"site.plddt_cat.{arm}"),
+                              ("boltz.complex_ipde|mean", f"boltz_ipde.{arm}"), ("boltz.complex_ipde|std", f"boltz_ipde.{arm}|sd"), ("boltz.complex_ipde|min", f"boltz_ipde.{arm}|min"), ("boltz.complex_ipde|max", f"boltz_ipde.{arm}|max"),
+                              ("boltz.ligand_iptm|mean", f"boltz_ligand_iptm.{arm}"), ("boltz.ligand_iptm|std", f"boltz_ligand_iptm.{arm}|sd"), ("boltz.complex_iplddt|mean", f"boltz_iplddt.{arm}")):
                 if col in s:
                     ent[name] = s[col]
         if "ipsae.tsa" in ent and "ipsae.sub" in ent:

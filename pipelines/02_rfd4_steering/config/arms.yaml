@@ -1,0 +1,60 @@
+# Arm definitions. Read by src/kemp/make_configs.py (RFD4 experiment YAMLs) and src/kemp/gen.py (replicates, seeds).
+#
+# unsteered        conditioning only (burial, hydrophobic contact, nitro acceptor, fixed tips); no search
+# steer_tmol       beam search on the reward set below
+# steer_tmol_ch18  steer_tmol + bottleneck-radius band 1.7-1.9 A and a weaker ligand-SASA term
+# <arm>_sheet      same arm with C_SEC=SHEET on the expandable segment (small diversity add-on)
+#
+# Seed of chunk c of batch b:  1000*b + 10*arm_offset + motif_offset + 100000*c   (distinct per batch, arm and motif)
+
+model:
+  weights: nvidia/RFD4-Proteina
+  revision: a06e2509c7033b010fc43614e9fd840303588502    # Hugging Face revision used for every design of the campaign
+
+search:
+  n_branch: 4
+  beam_width: 3
+  checkpoints: [30, 42, 52, 60]
+  clean_prediction_until: 52      # checkpoints <= this score the predicted clean structure; the last one scores the final sample
+
+motif_seed_offset: {hgnt: 0, hgwt: 5}
+
+arms:
+  unsteered:             {steered: false, replicates: 300, members: 1, seed_offset: 0}
+  steer_tmol:            {steered: true,  replicates: 100, members: 3, seed_offset: 1}
+  steer_tmol_ch18:       {steered: true,  replicates: 100, members: 3, seed_offset: 2, channel_band: true}
+  unsteered_sheet:       {steered: false, replicates: 30,  members: 1, seed_offset: 3, sheet: true}
+  steer_tmol_sheet:      {steered: true,  replicates: 10,  members: 3, seed_offset: 4, sheet: true}
+  steer_tmol_ch18_sheet: {steered: true,  replicates: 10,  members: 3, seed_offset: 5, sheet: true, channel_band: true}
+
+# Reward terms: metric.output -> weight, clip (applied to the raw value before weighting), normalize_by.
+rewards:
+  kemp_base.base_sc_polar_4p5:            {weight: -4.0, clip: {max: 3.0},  normalize_by: 1.0}    # side-chain polar atoms within 4.5 A of the base O
+  kemp_base.base_cation_6:                {weight: -3.0, clip: {max: 2.0},  normalize_by: 1.0}    # Lys/Arg within 6 A of the base O
+  kemp_base.base_sasa_rel:                {weight: -2.0, clip: {max: 0.5},  normalize_by: 0.5}
+  kemp_base.base_apolar_frac:             {weight: 0.5,  clip: {max: 1.0},  normalize_by: 1.0}
+  kemp_pocket3.volume_ratio_band_error:   {weight: -1.0, clip: {max: 0.6},  normalize_by: 0.3}    # pocket / ligand volume, band 0.5 +- 0.1
+  kemp_pocket3.ligand_sasa_frac:          {weight: -0.5, clip: {max: 0.2},  normalize_by: 0.2}
+  kemp_base.nitro_hb_near_base:           {weight: -1.0, clip: {max: 2.0},  normalize_by: 2.0}
+  kemp_base.nitro_hb_far:                 {weight: 0.5,  clip: {max: 1.0},  normalize_by: 1.0}
+  kemp_base.lig_clash_atoms:              {weight: -1.0, clip: {max: 3.0},  normalize_by: 3.0}
+  kemp_base.pp_clash_frac:                {weight: -1.0, clip: {max: 0.01}, normalize_by: 0.01}
+  kemp_chem_hg.base_rmsd:                 {weight: -2.0, clip: {max: 1.0},  normalize_by: 0.25}   # motif rigidity (ligand-superposed RMSD)
+  kemp_chem_hg.hb_rmsd:                   {weight: -1.5, clip: {max: 1.0},  normalize_by: 0.25}
+
+metrics: [kemp_base, kemp_pocket3, kemp_chem_hg, tmol_lig_ddg]
+
+# probe radii (A) of the bottleneck-channel metric; the per-design table always uses the band in gates.yaml
+channel_band_radii: [0.5, 0.7, 0.9, 1.1, 1.25, 1.4, 1.5, 1.6, 1.7, 1.75, 1.8, 1.85, 1.9, 2.0, 2.1, 2.3]
+
+# the TMol interface energy is always the last reward term
+tmol_reward:
+  tmol_lig_ddg.interface_ddg:             {weight: -0.5, normalize_by: 20.0, clip: {min: -80.0, max: 20.0}}
+
+# applied on top of the base set for arms with channel_band: true
+channel_band:
+  metrics: [kemp_channel18]
+  override:
+    kemp_pocket3.ligand_sasa_frac:        {weight: -0.25, clip: {max: 0.2}, normalize_by: 0.2}
+  add:
+    kemp_channel18.channel_band_error:    {weight: -2.0, clip: {max: 1.0},  normalize_by: 0.3}

@@ -1,0 +1,12 @@
+# Template for a DESIGN RUN: no crystal entries, proteins come only from the Boltz output folder.
+#   cp config/entries.design_run.yaml config/entries.yaml        (in your unpacked copy)
+# Optional activity labels for designs that were tested: config/labels.csv  (entry,kcat_KM[,class,note]; entry WITHOUT the _boltz suffix)
+reference_dir: /nonexistent
+entries: {}
+extra_entries: {}
+# Boltz folder is searched recursively. Each model's ARM comes from the ligand in the CIF (6NT=tsa, H5J=sub, 6VP=prod); the protein
+# name comes from the file name: <design>_<6NT|H5J|6VP|analogon|substrate|product|apo>  or  <design>__<tsa|sub|prod|apo>.
+boltz_refolds:
+  root: null
+  name_regex: '^(?P<entry>.+?)(?:__|_)(?P<arm>tsa|sub|prod|6NT|H5J|6VP|analogon|analogue|analog|substrate|product|apo)$'
+  entry_suffix: "_boltz"
